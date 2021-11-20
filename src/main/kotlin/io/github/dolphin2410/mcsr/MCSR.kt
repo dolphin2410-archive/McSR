@@ -10,21 +10,15 @@ object MCSR {
     lateinit var cli: CLIManager
     lateinit var mainScope: CoroutineScope
 
-    @JvmStatic
-    fun main(args: Array<String>) {
+    fun start(array: List<String>) {
         gui = GUIManager()
         cli = CLIManager()
         cli.addParser(DefaultParser)
 
         runBlocking(Dispatchers.IO) {
             mainScope = this
-
             launch {
                 cli.start()
-            }
-
-            launch {
-                gui.start()
             }
         }
     }

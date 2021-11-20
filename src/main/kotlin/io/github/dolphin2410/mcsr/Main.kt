@@ -7,9 +7,8 @@ import javafx.stage.Stage
 
 class Main: Application() {
     override fun start(primaryStage: Stage) {
-        primaryStage.scene = Scene(AnchorPane())
-        primaryStage.width = 1920.0 / 2
-        primaryStage.height = 1080.0 / 2
-        primaryStage.show()
+        MCSR.start(parameters.raw)
+        MCSR.gui.stage = primaryStage
+        MCSR.gui.start()
     }
 }
