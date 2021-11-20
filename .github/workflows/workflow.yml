@@ -2,7 +2,7 @@ name: Java CI
 on: [push]
 jobs:
   mac:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 16
@@ -13,9 +13,14 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew binary
-  win:
-    runs-on: windows-2022
+        run: ./gradlew mac
+      - name: Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mac-bin.zip
+          path: build/McSR-bin.zip
+  windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 16
@@ -26,8 +31,13 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew binary
-  linux:
+        run: ./gradlew windows
+      - name: Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-bin.zip
+          path: build/McSR-bin.zip
+  debian:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,4 +49,9 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew binary
+        run: ./gradlew debian
+      - name: Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: debian-bin.zip
+          path: build/McSR-bin.zip

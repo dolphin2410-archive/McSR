@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     kotlin("jvm") version "1.6.0"
@@ -60,34 +61,46 @@ jlink {
 
     jpackage {
         installerName = "McSR Installer"
-        installerOutputDir = File("C:/Users/dolph/Desktop/i")
     }
 }
 
 tasks {
+
+    val binaryTask = create("binary") {
+        dependsOn(jlinkZip.get())
+    }
+
     val packager = jpackage.get()
 
     create("windows") {
-        packager.jpackageData.installerType = "msi"
-        dependsOn(packager)
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            packager.jpackageData.installerType = "msi"
+            dependsOn(binaryTask)
+            dependsOn(packager)
+        }
     }
 
     create("debian") {
-        packager.jpackageData.installerType = "deb"
-        dependsOn(packager)
+        if (Os.isFamily(Os.FAMILY_UNIX)) {
+            packager.jpackageData.installerType = "deb"
+            dependsOn(binaryTask)
+            dependsOn(packager)
+        }
     }
 
     create("redhat") {
-        packager.jpackageData.installerType = "rpm"
-        dependsOn(packager)
+        if (Os.isFamily(Os.FAMILY_UNIX)) {
+            packager.jpackageData.installerType = "rpm"
+            dependsOn(binaryTask)
+            dependsOn(packager)
+        }
     }
 
     create("mac") {
-        packager.jpackageData.installerType = "dmg"
-        dependsOn(packager)
-    }
-
-    create("binary") {
-        dependsOn(jlinkZip.get())
+        if (Os.isFamily(Os.FAMILY_MAC)) {
+            packager.jpackageData.installerType = "dmg"
+            dependsOn(binaryTask)
+            dependsOn(packager)
+        }
     }
 }
