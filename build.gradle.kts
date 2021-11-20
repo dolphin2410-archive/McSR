@@ -61,6 +61,7 @@ jlink {
 
     jpackage {
         installerName = "McSR Installer"
+        appVersion = project.version.toString()
     }
 }
 
