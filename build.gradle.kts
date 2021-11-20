@@ -58,10 +58,8 @@ jlink {
     )
     addExtraDependencies("javafx")
     imageZip.set(project.file("${project.buildDir}/${project.name}-bin.zip"))
-
     jpackage {
         installerName = "McSR Installer"
-        appVersion = project.version.toString()
     }
 }
 

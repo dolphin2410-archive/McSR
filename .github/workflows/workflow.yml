@@ -19,11 +19,11 @@ jobs:
         with:
           name: mac-bin.zip
           path: build/McSR-bin.zip
-      - name: Installer
-        uses: actions/upload-artifact@v2
-        with:
-          name: macos-installer
-          path: build/jpackage/McSR
+#      - name: Installer
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: macos-installer
+#          path: build/jpackage/McSR
   windows:
     runs-on: windows-latest
     steps:
@@ -42,11 +42,11 @@ jobs:
         with:
           name: windows-bin.zip
           path: build/McSR-bin.zip
-      - name: Installer
-        uses: actions/upload-artifact@v2
-        with:
-          name: windows-installer
-          path: build/jpackage/McSR
+#      - name: Installer
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: windows-installer
+#          path: build/jpackage/McSR
   debian:
     runs-on: ubuntu-latest
     steps:
@@ -65,8 +65,8 @@ jobs:
         with:
           name: debian-bin.zip
           path: build/McSR-bin.zip
-      - name: Installer
-        uses: actions/upload-artifact@v2
-        with:
-          name: debian-installer
-          path: build/jpackage/McSR
+#      - name: Installer
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: debian-installer
+#          path: build/jpackage/McSR
