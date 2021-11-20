@@ -69,37 +69,37 @@ tasks {
         dependsOn(jlinkZip.get())
     }
 
-    val packager = jpackage.get()
-
-    create("windows") {
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            packager.jpackageData.installerType = "msi"
-            dependsOn(binaryTask)
-            dependsOn(packager)
-        }
-    }
-
-    create("debian") {
-        if (Os.isFamily(Os.FAMILY_UNIX)) {
-            packager.jpackageData.installerType = "deb"
-            dependsOn(binaryTask)
-            dependsOn(packager)
-        }
-    }
-
-    create("redhat") {
-        if (Os.isFamily(Os.FAMILY_UNIX)) {
-            packager.jpackageData.installerType = "rpm"
-            dependsOn(binaryTask)
-            dependsOn(packager)
-        }
-    }
-
-    create("mac") {
-        if (Os.isFamily(Os.FAMILY_MAC)) {
-            packager.jpackageData.installerType = "dmg"
-            dependsOn(binaryTask)
-            dependsOn(packager)
-        }
-    }
+//    val packager = jpackage.get()
+//
+//    create("windows") {
+//        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+//            packager.jpackageData.installerType = "msi"
+//            dependsOn(binaryTask)
+//            dependsOn(packager)
+//        }
+//    }
+//
+//    create("debian") {
+//        if (Os.isFamily(Os.FAMILY_UNIX)) {
+//            packager.jpackageData.installerType = "deb"
+//            dependsOn(binaryTask)
+//            dependsOn(packager)
+//        }
+//    }
+//
+//    create("redhat") {
+//        if (Os.isFamily(Os.FAMILY_UNIX)) {
+//            packager.jpackageData.installerType = "rpm"
+//            dependsOn(binaryTask)
+//            dependsOn(packager)
+//        }
+//    }
+//
+//    create("mac") {
+//        if (Os.isFamily(Os.FAMILY_MAC)) {
+//            packager.jpackageData.installerType = "dmg"
+//            dependsOn(binaryTask)
+//            dependsOn(packager)
+//        }
+//    }
 }
