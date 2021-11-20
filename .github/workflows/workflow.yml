@@ -13,7 +13,7 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew mac
+        run: ./gradlew binary
       - name: Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew windows
+        run: ./gradlew binary
       - name: Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -59,7 +59,7 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        run: ./gradlew debian
+        run: ./gradlew binary
       - name: Artifact
         uses: actions/upload-artifact@v2
         with:
