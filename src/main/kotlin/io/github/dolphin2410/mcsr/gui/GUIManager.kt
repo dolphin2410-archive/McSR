@@ -1,27 +1,39 @@
 package io.github.dolphin2410.mcsr.gui
 
-import io.github.dolphin2410.mcsr.util.coroutine.awaitCoroutine
-import io.github.dolphin2410.mcsr.util.web.PaperData
-import java.awt.Dimension
-import java.awt.event.WindowEvent
-import javax.swing.*
+import java.awt.GridLayout
+import javax.swing.JEditorPane
+import javax.swing.JFrame
+import javax.swing.JPanel
+import javax.swing.JScrollPane
 
-class GUIManager: JFrame("Minecraft Server Runner") {
+
+class GUIManager : JFrame("Title") {
+
     fun start() {
-        size = Dimension(1920 / 2, 1080 / 2)
-        setLocationRelativeTo(null)
-        isVisible = true
         defaultCloseOperation = EXIT_ON_CLOSE
-        isResizable = false
-        init()
+
+        contentPane = JPanel()
+        contentPane.layout = GridLayout(1, 2, 2, 2)
+
+        val editorPane = JEditorPane("http://www.java2s.com")
+        editorPane.contentType = "text/html"
+        editorPane.isEditable = false
+//        editorPane.text = javaClass.classLoader.getResourceAsStream("my.html")?.let {
+//            BufferedReader(InputStreamReader(it)).readText()
+//        } ?: "NO_FILE"
+
+        val scrollPane = JScrollPane()
+        scrollPane.setViewportView(editorPane)
+
+        contentPane.add(scrollPane)
+
+        setSize(960, 540)
+        isLocationByPlatform = true
+        isVisible = true
+        setLocationRelativeTo(null)
     }
 
     fun close() {
-        dispatchEvent(WindowEvent(this, WindowEvent.WINDOW_CLOSING))
-    }
 
-    private fun init() {
-        val versions = awaitCoroutine(PaperData::fetchVersions)
-        // GUI HANDLING
     }
 }

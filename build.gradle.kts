@@ -1,53 +1,39 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.internal.os.OperatingSystem
 
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.5.30"
     application
+    id("org.openjfx.javafxplugin") version "0.0.10"
+    id("org.beryx.jlink") version "2.24.4"
 }
 
 group = "io.github.dolphin2410"
-version = "0.0.1-Beta"
+version = "0.0.1"
+
+dependencies {
+    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+}
+
+application {
+    mainClass.set("io.github.dolphin2410.mcsr.Main")
+    mainModule.set("McSR.main")
+}
 
 repositories {
     mavenCentral()
 }
 
-configurations {
-    create("shade")
+javafx {
+    modules = listOf("javafx.controls", "javafx.fxml", "javafx.swing")
 }
 
-dependencies {
-    implementation(kotlin("stdlib"))
-    configurations["shade"]("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-    configurations["shade"]("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "16"
+jlink {
+    launcher {
+        name = "helloFX"
     }
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(16))
-}
-
-dependencies {
-    configurations["shade"].forEach {
-        implementation(files(it))
-    }
-}
-
-tasks {
-    jar {
-        manifest {
-            attributes["Main-Class"] = "io.github.dolphin2410.mcsr.MCSR"
-        }
-
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-        from(configurations["shade"].map {
-            if (it.isDirectory) it else zipTree(it)
-        })
-    }
+    forceMerge("kotlin-stdlib", "kotlin-stdlib-common", "kotlin-stdlib-jdk7", "kotlin-stdlib-jdk8", "kotlinx-coroutines-core-jvm", "kotlinx-serialization-core-jvm", "kotlinx-serialization-json-jvm")
+    addExtraDependencies("javafx")
+    imageZip.set(project.file("${project.buildDir}/image-zip/hello-image.zip"))
 }
