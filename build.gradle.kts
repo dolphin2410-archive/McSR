@@ -38,8 +38,9 @@ application {
 }
 
 javafx {
+    version = "16"
     modules = listOf(
-        "javafx.controls", "javafx.fxml"
+        "javafx.controls", "javafx.fxml", "javafx.web"
     )
 }
 

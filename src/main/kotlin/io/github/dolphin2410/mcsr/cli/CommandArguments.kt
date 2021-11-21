@@ -2,6 +2,7 @@ package io.github.dolphin2410.mcsr.cli
 
 import io.github.dolphin2410.mcsr.settings.DefaultSettings.FLAG_PREFIX
 import io.github.dolphin2410.mcsr.cli.parser.ParseResult
+import io.github.dolphin2410.mcsr.cli.template.TemplateMatcher
 
 class CommandArguments(private val initArgs: List<String>) {
 
@@ -33,6 +34,23 @@ class CommandArguments(private val initArgs: List<String>) {
         if (flag(name)) then()
     }
 
+    fun inp(then: CommandArguments.(String) -> Unit) {
+        if (arguments.getOrNull(position) != null) {
+            clone().apply { position += 1 }.run {
+                then(this@run, arguments[position])
+            }
+        }
+    }
+
+    fun inp(pattern: String, then: CommandArguments.(HashMap<String, String>) -> Unit) {
+        then(
+            TemplateMatcher.match(pattern, arguments[position++]).onEach {
+                println(it.key)
+                println(it.value)
+            }
+        )
+    }
+
     @Suppress("WeakerAccess")
     fun args(vararg _args: String): Boolean {
         if (arguments.size <= position) {
@@ -40,7 +58,7 @@ class CommandArguments(private val initArgs: List<String>) {
         }
 
         for (i in position until _args.size) {
-            if (_args[i] != arguments.getOrNull(i)) return false // else println("arg: ${args[i]}, argu: ${arguments[i]}")
+            if (_args[i] != arguments.getOrNull(i)) return false
         }
 
         return true

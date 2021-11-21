@@ -7,7 +7,7 @@ import javafx.stage.Stage
 
 class Main: Application() {
     override fun start(primaryStage: Stage) {
-        MCSR.start(parameters.raw)
+        MCSR.start()
         MCSR.gui.stage = primaryStage
         MCSR.gui.start()
     }

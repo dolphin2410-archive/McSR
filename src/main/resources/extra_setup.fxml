@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.dolphin2410.mcsr.gui.controllers.ExtraSetupController">
    <children>
       <Button layoutX="658.0" layoutY="443.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
@@ -27,6 +26,6 @@
       <Label layoutX="74.0" layoutY="171.0" text="서버 폴더" />
       <TextField layoutX="186.0" layoutY="171.0" prefHeight="25.0" prefWidth="370.0" />
       <Button layoutX="716.0" layoutY="443.0" mnemonicParsing="false" onAction="#next" text="Next" />
-      <Button layoutX="762.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="X" />
+      <Button fx:id="closeBtn" layoutX="762.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="✖" />
    </children>
 </Pane>

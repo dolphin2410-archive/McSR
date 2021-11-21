@@ -3,6 +3,7 @@ module McSR.main {
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.web;
     requires java.net.http;
     requires kotlinx.coroutines.core.jvm;
     requires kotlin.stdlib;

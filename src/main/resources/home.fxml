@@ -9,30 +9,29 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.dolphin2410.mcsr.gui.controllers.HomeController">
    <children>
       <Pane prefHeight="540.0" prefWidth="400.0">
          <children>
-            <Circle fill="#d1d1d1" layoutX="200.0" layoutY="160.0" radius="73.0" stroke="#ffffff00" strokeType="INSIDE" />
+            <Circle fx:id="icon" fill="#d1d1d1" layoutX="200.0" layoutY="160.0" radius="73.0" stroke="#ffffff00" strokeType="INSIDE" />
             <Label layoutX="151.0" layoutY="243.0" prefHeight="59.0" prefWidth="99.0" text="McSR">
                <font>
                   <Font name="Arial" size="36.0" />
                </font>
             </Label>
-            <Button layoutX="174.0" layoutY="397.0" mnemonicParsing="false" text="credits" />
+            <Button fx:id="credits" layoutX="174.0" layoutY="397.0" mnemonicParsing="false" onAction="#creditOpen" text="credits" />
          </children>
       </Pane>
       <VBox prefHeight="500.0" prefWidth="400.0">
          <children>
-            <Pane prefHeight="100.0" prefWidth="400.0">
+            <Pane prefHeight="70.0" prefWidth="400.0">
                <children>
-                  <Button layoutX="78.0" layoutY="63.0" mnemonicParsing="false" onAction="#createNew" prefHeight="10.0" prefWidth="80.0" text="새로 만들기" />
-                  <Button layoutY="63.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="불러오기" />
-                  <Button layoutX="362.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="X" />
+                  <Button fx:id="make" layoutX="80.0" layoutY="38.0" mnemonicParsing="false" onAction="#createNew" prefHeight="10.0" prefWidth="80.0" text="새로 만들기" />
+                  <Button fx:id="load" layoutY="38.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="불러오기" />
+                  <Button fx:id="closeBtn" layoutX="362.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="✖" />
                </children>
             </Pane>
-            <ListView prefHeight="400.0" prefWidth="400.0" />
+            <ListView fx:id="list" prefHeight="430.0" prefWidth="400.0" />
          </children>
       </VBox>
    </children>

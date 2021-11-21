@@ -1,6 +1,9 @@
 package io.github.dolphin2410.mcsr.gui
 
 import io.github.dolphin2410.mcsr.MCSR
+import io.github.dolphin2410.mcsr.gui.controllers.BaseController
+import io.github.dolphin2410.mcsr.gui.util.center
+import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Screen
 import javafx.stage.Stage
@@ -14,7 +17,7 @@ class GUIManager {
     fun start() {
         SceneManager.loadHome()
         initStage()
-        center()
+        center(stage)
 
         stage.show()
     }
@@ -26,20 +29,12 @@ class GUIManager {
         stage.isResizable = false
     }
 
-    /**
-     * Centers the JavaFX screen
-     */
-    private fun center() {
-        val screen = Screen.getPrimary().visualBounds
-        stage.x = (screen.width - stage.width) / 2
-        stage.y = (screen.height - stage.height) / 2
-    }
-
     fun close() {
         stage.close()
     }
 
-    fun loadScene(scene: Scene) {
+    fun loadScene(scene: Scene, loader: FXMLLoader) {
         stage.scene = scene
+        loader.getController<BaseController>().load(loader)
     }
 }
