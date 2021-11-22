@@ -19,6 +19,18 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+subprojects {
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "application")
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation(kotlin("stdlib"))
+    }
+}
+
 group = "io.github.dolphin2410"
 version = "0.0.1"
 
@@ -26,41 +38,47 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-}
-
-application {
-    mainClass.set("io.github.dolphin2410.mcsr.Main")
-    mainModule.set("McSR.main")
-}
-
-javafx {
-    version = "16"
-    modules = listOf(
-        "javafx.controls", "javafx.fxml", "javafx.web"
-    )
-}
-
-jlink {
-    launcher {
-        name = "McSR"
+project(":mcsr") {
+    apply(plugin = "application")
+    apply(plugin = "org.openjfx.javafxplugin")
+    apply(plugin = "org.beryx.jlink")
+    dependencies {
+        implementation(kotlin("stdlib"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+        implementation(project(":api"))
     }
-    forceMerge(
-        "kotlin-stdlib",
-        "kotlin-stdlib-common",
-        "kotlin-stdlib-jdk7",
-        "kotlin-stdlib-jdk8",
-        "kotlinx-coroutines-core-jvm",
-        "kotlinx-serialization-core-jvm",
-        "kotlinx-serialization-json-jvm"
-    )
-    addExtraDependencies("javafx")
-    imageZip.set(project.file("${project.buildDir}/${project.name}-bin.zip"))
-    jpackage {
-        installerName = "McSR Installer"
+
+    application {
+        mainClass.set("io.github.dolphin2410.mcsr.Main")
+        mainModule.set("McSR.main")
+    }
+
+    javafx {
+        version = "16"
+        modules = listOf(
+            "javafx.controls", "javafx.fxml", "javafx.web"
+        )
+    }
+
+    jlink {
+        launcher {
+            name = "McSR"
+        }
+        forceMerge(
+            "kotlin-stdlib",
+            "kotlin-stdlib-common",
+            "kotlin-stdlib-jdk7",
+            "kotlin-stdlib-jdk8",
+            "kotlinx-coroutines-core-jvm",
+            "kotlinx-serialization-core-jvm",
+            "kotlinx-serialization-json-jvm"
+        )
+        addExtraDependencies("javafx")
+        imageZip.set(project.file("${project.buildDir}/${project.name}-bin.zip"))
+        jpackage {
+            installerName = "McSR Installer"
+        }
     }
 }
 
