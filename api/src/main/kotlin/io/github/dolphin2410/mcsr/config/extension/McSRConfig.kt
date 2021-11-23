@@ -3,11 +3,12 @@ package io.github.dolphin2410.mcsr.config.extension
 import io.github.dolphin2410.mcsr.config.AbstractConfiguration
 import io.github.dolphin2410.mcsr.config.Variable
 import io.github.dolphin2410.mcsr.config.config.Config
+import io.github.dolphin2410.mcsr.script.ScriptType
 
-class McSRConfig: AbstractConfiguration<McSRConfig>() {
+class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
     companion object {
         @JvmStatic
-        fun load(): McSRConfig {
+        fun of(jvmArgs: String = "", autoReload: Boolean = false, autoBackup: Boolean = false, serverFolder: String, serverSoftware: ScriptType = ScriptType.AROXU, memory: String = "1G", serverUrl: String): McSRConfig {
             TODO()
         }
     }

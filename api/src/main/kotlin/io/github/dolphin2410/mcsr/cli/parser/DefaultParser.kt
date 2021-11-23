@@ -1,12 +1,10 @@
 package io.github.dolphin2410.mcsr.cli.parser
 
-import io.github.dolphin2410.mcsr.MCSR
-import io.github.dolphin2410.mcsr.cli.CommandArguments
 import io.github.dolphin2410.mcsr.loader.MCSRLoader
 import kotlin.system.exitProcess
 
 object DefaultParser: CommandParser {
-    override fun parse(commands: CommandArguments): ParseResult {
+    override fun parse(commands: io.github.dolphin2410.mcsr.cli.CommandArguments): ParseResult {
         return commands.parse {
             command("launch") {
 
@@ -18,7 +16,7 @@ object DefaultParser: CommandParser {
                     println("GUI!")
                 }
 
-                MCSR.gui.close()
+                MCSRLoader.mcsr.gui.close()
             }
 
             command("export-config") {

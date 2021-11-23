@@ -12,7 +12,7 @@ class GUIManager: AbstractGUIManager {
 
     lateinit var stage: Stage
 
-    fun start() {
+    override fun start() {
         SceneManager.loadHome()
         initStage()
         center(stage)
@@ -27,7 +27,7 @@ class GUIManager: AbstractGUIManager {
         stage.isResizable = false
     }
 
-    fun close() {
+    override fun close() {
         stage.close()
     }
 

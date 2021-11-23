@@ -8,7 +8,7 @@ module McSR.main {
     requires kotlinx.coroutines.core.jvm;
     requires kotlin.stdlib;
     requires kotlinx.serialization.json;
-    requires McSR.api;
+    requires api;
 
     opens io.github.dolphin2410.mcsr.gui.controllers to javafx.fxml;
     exports io.github.dolphin2410.mcsr;

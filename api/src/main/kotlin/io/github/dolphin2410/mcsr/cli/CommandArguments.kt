@@ -11,10 +11,10 @@ class CommandArguments(private val initArgs: List<String>) {
     }
 
     // FIXME Better Algorithm needed
-    private val arguments = initArgs.filter { !it.startsWith(FLAG_PREFIX) }
+    private val arguments = initArgs.filter { !it.startsWith(io.github.dolphin2410.mcsr.cli.CommandArguments.Companion.FLAG_PREFIX) }
 
     // FIXME Better Algorithm needed
-    private val flags = initArgs.filter { it.startsWith(FLAG_PREFIX) }
+    private val flags = initArgs.filter { it.startsWith(io.github.dolphin2410.mcsr.cli.CommandArguments.Companion.FLAG_PREFIX) }
 
     @Suppress("WeakerAccess")
     var position: Int = 0
@@ -27,18 +27,18 @@ class CommandArguments(private val initArgs: List<String>) {
 
     @Suppress("WeakerAccess")
     fun flag(name: String): Boolean {
-        return flags.contains(FLAG_PREFIX + name)
+        return flags.contains(io.github.dolphin2410.mcsr.cli.CommandArguments.Companion.FLAG_PREFIX + name)
     }
 
-    fun noflag(name: String, then: CommandArguments.() -> Unit) {
+    fun noflag(name: String, then: io.github.dolphin2410.mcsr.cli.CommandArguments.() -> Unit) {
         if (!flag(name)) then()
     }
 
-    fun flag(name: String, then: CommandArguments.() -> Unit) {
+    fun flag(name: String, then: io.github.dolphin2410.mcsr.cli.CommandArguments.() -> Unit) {
         if (flag(name)) then()
     }
 
-    fun input(then: CommandArguments.(String) -> Unit) {
+    fun input(then: io.github.dolphin2410.mcsr.cli.CommandArguments.(String) -> Unit) {
         if (arguments.getOrNull(position) != null) {
             clone().apply { position += 1 }.run {
                 then(this@run, arguments[position])
@@ -46,7 +46,7 @@ class CommandArguments(private val initArgs: List<String>) {
         }
     }
 
-    fun input(pattern: String, then: CommandArguments.(HashMap<String, String>) -> Unit) {
+    fun input(pattern: String, then: io.github.dolphin2410.mcsr.cli.CommandArguments.(HashMap<String, String>) -> Unit) {
         val str = StringJoiner(" ").apply {
             val until = pattern.split("\\s+".toRegex()).size
             for (i in position until until) {
@@ -74,20 +74,20 @@ class CommandArguments(private val initArgs: List<String>) {
         return true
     }
 
-    fun option(vararg _args: String, then: CommandArguments.() -> Unit) {
+    fun option(vararg _args: String, then: io.github.dolphin2410.mcsr.cli.CommandArguments.() -> Unit) {
         if (option(*_args)) clone().apply { position += _args.size }.run(then)
     }
 
-    fun command(vararg _args: String, then: CommandArguments.() -> Unit) {
+    fun command(vararg _args: String, then: io.github.dolphin2410.mcsr.cli.CommandArguments.() -> Unit) {
         if (option(*_args)) clone().apply { position += _args.size }.run(then).run { commandSent = true }
     }
 
-    fun parse(then: CommandArguments.() -> Unit): ParseResult {
+    fun parse(then: io.github.dolphin2410.mcsr.cli.CommandArguments.() -> Unit): ParseResult {
         then()
         return if (commandSent) ParseResult.SUCCESS else ParseResult.FAIL
     }
 
-    private fun clone(): CommandArguments {
-        return CommandArguments(initArgs)
+    private fun clone(): io.github.dolphin2410.mcsr.cli.CommandArguments {
+        return io.github.dolphin2410.mcsr.cli.CommandArguments(initArgs)
     }
 }
