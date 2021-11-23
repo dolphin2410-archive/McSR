@@ -45,6 +45,6 @@ class HomeController: BaseController() {
     }
 
     override fun initialize() {
-        icon.fill = ImagePattern(Image(javaClass.classLoader.getResource("icon.jpg")!!.openStream()))
+        icon.fill = ImagePattern(Image(javaClass.classLoader.getResource("icon.png")!!.openStream()))
     }
 }

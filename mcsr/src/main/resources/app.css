@@ -1,0 +1,35 @@
+#closeBtn {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#make {
+    -fx-background-color: rgb(0, 100, 200);
+    -fx-text-fill: white;
+}
+
+#credits {
+    -fx-background-color: gray;
+    -fx-text-fill: white;
+}
+
+#load {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.dialog-pane:no-header .graphic-container {
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+}
