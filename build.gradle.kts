@@ -4,9 +4,9 @@ import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     kotlin("jvm") version "1.6.0"
     application
-    id("org.openjfx.javafxplugin") version "0.0.10"
+    id("org.openjfx.javafxplugin") version "0.0.10" apply false
     id("org.beryx.jlink") version "2.24.4"
-    id("org.javamodularity.moduleplugin") version "1.8.10"
+    id("org.javamodularity.moduleplugin") version "1.8.10" apply false
 }
 
 // Java 16
@@ -50,77 +50,15 @@ project(":mcsr") {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
         implementation(project(":api"))
     }
-
-    javafx {
-        version = "16"
-        modules = listOf(
-            "javafx.controls", "javafx.fxml", "javafx.web"
-        )
-    }
-
-    jlink {
-        launcher {
-            name = "McSR"
-        }
-        forceMerge(
-            "kotlin-stdlib",
-            "kotlin-stdlib-common",
-            "kotlin-stdlib-jdk7",
-            "kotlin-stdlib-jdk8",
-            "kotlinx-coroutines-core-jvm",
-            "kotlinx-serialization-core-jvm",
-            "kotlinx-serialization-json-jvm"
-        )
-        addExtraDependencies("javafx")
-        imageZip.set(project.file("${project.buildDir}/${project.name}-bin.zip"))
-        jpackage {
-            installerName = "McSR Installer"
-        }
-    }
-
-    application {
-        mainClass.set("io.github.dolphin2410.mcsr.Main")
-        mainModule.set("McSR.main")
-    }
 }
 
 tasks {
 
-    val binaryTask = create("binary") {
-        dependsOn(jlinkZip.get())
+    create("binary") {
+        dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 
-//    val packager = jpackage.get()
-//
-//    create("windows") {
-//        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-//            packager.jpackageData.installerType = "msi"
-//            dependsOn(binaryTask)
-//            dependsOn(packager)
-//        }
-//    }
-//
-//    create("debian") {
-//        if (Os.isFamily(Os.FAMILY_UNIX)) {
-//            packager.jpackageData.installerType = "deb"
-//            dependsOn(binaryTask)
-//            dependsOn(packager)
-//        }
-//    }
-//
-//    create("redhat") {
-//        if (Os.isFamily(Os.FAMILY_UNIX)) {
-//            packager.jpackageData.installerType = "rpm"
-//            dependsOn(binaryTask)
-//            dependsOn(packager)
-//        }
-//    }
-//
-//    create("mac") {
-//        if (Os.isFamily(Os.FAMILY_MAC)) {
-//            packager.jpackageData.installerType = "dmg"
-//            dependsOn(binaryTask)
-//            dependsOn(packager)
-//        }
-//    }
+    named<JavaExec>("run") {
+        dependsOn(project(":mcsr").tasks.run)
+    }
 }
