@@ -1,34 +1,26 @@
 package io.github.dolphin2410.mcsr
 
+import io.github.dolphin2410.mcsr.api.cli.parser.DefaultParser
+import io.github.dolphin2410.mcsr.api.loader.MCSRLoader
 import io.github.dolphin2410.mcsr.cli.CLIManager
-import io.github.dolphin2410.mcsr.cli.parser.DefaultParser
 import io.github.dolphin2410.mcsr.gui.GUIManager
-import io.github.dolphin2410.mcsr.loader.AbstractMcSR
-import io.github.dolphin2410.mcsr.loader.MCSRLoader
-import kotlinx.coroutines.*
+import java.util.concurrent.Executors
 
-object MCSR: AbstractMcSR {
-
-    @Suppress("WeakerAccess")
+object MCSR: io.github.dolphin2410.mcsr.api.AbstractMcSR {
 
     override lateinit var gui: GUIManager
 
-    @Suppress("WeakerAccess")
     override lateinit var cli: CLIManager
 
-    lateinit var mainScope: CoroutineScope
-
-    @OptIn(DelicateCoroutinesApi::class)
     fun start() {
         gui = GUIManager()
+
         cli = CLIManager()
         cli.addParser(DefaultParser)
+
         MCSRLoader.mcsr = this
-        GlobalScope.launch(Dispatchers.IO) {
-            mainScope = this
-            launch {
-//                cli.start()
-            }
+        Executors.newFixedThreadPool(1).submit {
+            cli.start()
         }
     }
 }

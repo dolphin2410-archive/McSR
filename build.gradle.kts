@@ -18,12 +18,21 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "application")
     apply(plugin = "org.javamodularity.moduleplugin")
+
+    configurations {
+        create("shade")
+    }
+
     repositories {
         mavenCentral()
     }
 
     dependencies {
         implementation(kotlin("stdlib"))
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+        if (project.name != "api") {
+            implementation(project(":api"))
+        }
     }
 
     tasks.withType<KotlinCompile> {
@@ -44,21 +53,16 @@ project(":mcsr") {
     apply(plugin = "application")
     apply(plugin = "org.openjfx.javafxplugin")
     apply(plugin = "org.beryx.jlink")
-    dependencies {
-        implementation(kotlin("stdlib"))
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
-        implementation(project(":api"))
-    }
 }
 
 tasks {
-
     create("binary") {
+        dependsOn(project(":runner").tasks.jar.get())
         dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 
     named<JavaExec>("run") {
+        dependsOn(project(":runner").tasks.jar.get())
         dependsOn(project(":mcsr").tasks.run)
     }
 }

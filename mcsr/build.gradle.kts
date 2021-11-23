@@ -14,7 +14,6 @@ jlink {
         "kotlin-stdlib-common",
         "kotlin-stdlib-jdk7",
         "kotlin-stdlib-jdk8",
-        "kotlinx-coroutines-core-jvm",
         "kotlinx-serialization-core-jvm",
         "kotlinx-serialization-json-jvm"
     )
@@ -27,5 +26,5 @@ jlink {
 
 application {
     mainClass.set("io.github.dolphin2410.mcsr.Main")
-    mainModule.set("McSR.main")
+    mainModule.set("mcsr")
 }

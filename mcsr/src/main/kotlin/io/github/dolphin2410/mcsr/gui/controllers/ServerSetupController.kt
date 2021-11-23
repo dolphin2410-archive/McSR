@@ -1,11 +1,11 @@
 package io.github.dolphin2410.mcsr.gui.controllers
 
+import io.github.dolphin2410.mcsr.api.util.ServerProgram
+import io.github.dolphin2410.mcsr.api.util.data.MinecraftData
+import io.github.dolphin2410.mcsr.api.util.data.PaperData
+import io.github.dolphin2410.mcsr.api.util.data.SpigotData
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import io.github.dolphin2410.mcsr.gui.util.ServerSetupMode
-import io.github.dolphin2410.mcsr.util.data.MinecraftData
-import io.github.dolphin2410.mcsr.util.data.PaperData
-import io.github.dolphin2410.mcsr.util.data.SpigotData
-import io.github.dolphin2410.mcsr.util.server.ServerProgram
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Accordion

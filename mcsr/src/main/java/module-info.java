@@ -1,11 +1,10 @@
-module McSR.main {
+module mcsr {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.base;
     requires javafx.web;
     requires java.net.http;
-    requires kotlinx.coroutines.core.jvm;
     requires kotlin.stdlib;
     requires kotlinx.serialization.json;
     requires api;

@@ -1,8 +1,8 @@
 package io.github.dolphin2410.mcsr.gui
 
+import io.github.dolphin2410.mcsr.api.gui.AbstractGUIManager
 import io.github.dolphin2410.mcsr.gui.controllers.BaseController
 import io.github.dolphin2410.mcsr.gui.util.center
-import io.github.dolphin2410.mcsr.loader.AbstractGUIManager
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage

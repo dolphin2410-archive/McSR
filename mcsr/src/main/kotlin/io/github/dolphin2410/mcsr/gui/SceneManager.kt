@@ -1,5 +1,6 @@
 package io.github.dolphin2410.mcsr.gui
 
+import io.github.dolphin2410.mcsr.MCSR
 import io.github.dolphin2410.mcsr.gui.controllers.*
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
@@ -18,24 +19,24 @@ object SceneManager {
     private val finish = Scene(finishLoader.load(javaClass.classLoader.getResource("finish.fxml")!!.openStream()))
 
     fun loadHome() {
-        io.github.dolphin2410.mcsr.MCSR.gui.loadScene(home, homeLoader)
+        MCSR.gui.loadScene(home, homeLoader)
     }
 
     fun loadServerSetup(init: Boolean = false) {
-        io.github.dolphin2410.mcsr.MCSR.gui.loadScene(serverSetup, serverSetupLoader)
+        MCSR.gui.loadScene(serverSetup, serverSetupLoader)
         if (init) serverSetupLoader.getController<ServerSetupController>().init()
 
     }
 
     fun loadExtraSetup() {
-        io.github.dolphin2410.mcsr.MCSR.gui.loadScene(extraSetup, extraSetupLoader)
+        MCSR.gui.loadScene(extraSetup, extraSetupLoader)
     }
 
     fun loadScript() {
-        io.github.dolphin2410.mcsr.MCSR.gui.loadScene(script, scriptLoader)
+        MCSR.gui.loadScene(script, scriptLoader)
     }
 
     fun loadFinish() {
-        io.github.dolphin2410.mcsr.MCSR.gui.loadScene(finish, finishLoader)
+        MCSR.gui.loadScene(finish, finishLoader)
     }
 }

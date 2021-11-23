@@ -1,5 +1,6 @@
 package io.github.dolphin2410.mcsr.gui.controllers
 
+import io.github.dolphin2410.mcsr.MCSR
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.Button
@@ -12,7 +13,7 @@ open class BaseController {
 
     @FXML
     fun exit() {
-        io.github.dolphin2410.mcsr.MCSR.gui.close()
+        MCSR.gui.close()
     }
 
     @FXML
