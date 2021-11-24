@@ -1,8 +1,8 @@
-module api {
-    requires kotlinx.serialization.json;
-    requires kotlinx.serialization.core;
-    requires java.net.http;
-    requires kotlin.stdlib;
+open module api {
+    requires transitive kotlinx.serialization.json;
+    requires transitive kotlinx.serialization.core;
+    requires transitive java.net.http;
+    requires transitive kotlin.stdlib;
 
     exports io.github.dolphin2410.mcsr.api.cli.parser;
     exports io.github.dolphin2410.mcsr.api.cli.template;

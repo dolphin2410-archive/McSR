@@ -20,7 +20,7 @@ tasks {
 
         copy {
             from(archiveFile.get().asFile)
-            into(File(project(":mcsr").projectDir, "src/main/resources/"))
+            into(File(project(":mcsr").projectDir, "src/main/resources/assets/"))
         }
 
         println("JarTask...")
