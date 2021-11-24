@@ -21,15 +21,3 @@
     -fx-background-color: white;
     -fx-text-fill: black;
 }
-
-.dialog-pane:no-header .graphic-container {
-    -fx-padding: 0;
-}
-
-.list-cell {
-    -fx-background-color: transparent;
-}
-
-.list-view {
-    -fx-background-color: transparent;
-}

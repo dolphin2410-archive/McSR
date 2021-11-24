@@ -12,11 +12,11 @@ object SceneManager {
     private val scriptLoader = FXMLLoader()
     private val finishLoader = FXMLLoader()
 
-    private val home = Scene(homeLoader.load(javaClass.classLoader.getResource("home.fxml")!!.openStream()))
-    private val serverSetup = Scene(serverSetupLoader.load(javaClass.classLoader.getResource("server_setup.fxml")!!.openStream()))
-    private val extraSetup = Scene(extraSetupLoader.load(javaClass.classLoader.getResource("extra_setup.fxml")!!.openStream()))
-    private val script = Scene(scriptLoader.load(javaClass.classLoader.getResource("script.fxml")!!.openStream()))
-    private val finish = Scene(finishLoader.load(javaClass.classLoader.getResource("finish.fxml")!!.openStream()))
+    private val home = Scene(homeLoader.load(javaClass.classLoader.getResourceAsStream("fxml/home.fxml")))
+    private val serverSetup = Scene(serverSetupLoader.load(javaClass.classLoader.getResourceAsStream("fxml/server_setup.fxml")))
+    private val extraSetup = Scene(extraSetupLoader.load(javaClass.classLoader.getResourceAsStream("fxml/extra_setup.fxml")))
+    private val script = Scene(scriptLoader.load(javaClass.classLoader.getResourceAsStream("fxml/script.fxml")))
+    private val finish = Scene(finishLoader.load(javaClass.classLoader.getResourceAsStream("fxml/finish.fxml")))
 
     fun loadHome() {
         MCSR.gui.loadScene(home, homeLoader)

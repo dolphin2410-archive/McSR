@@ -10,10 +10,18 @@ tasks {
             attributes["Main-Class"] = "io.github.dolphin2410.mcsr.runner.Main"
         }
 
-        from(project.sourceSets["main"].output)
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
         from(configurations.shade.get().map {
-            from (if(it.isDirectory) it else zipTree(it))
+            if(it.isDirectory) it else zipTree(it)
         })
+
+        from(project.sourceSets["main"].output)
+
+        copy {
+            from(archiveFile.get().asFile)
+            into(File(project(":mcsr").projectDir, "src/main/resources/"))
+        }
 
         println("JarTask...")
     }

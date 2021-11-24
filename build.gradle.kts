@@ -56,13 +56,17 @@ project(":mcsr") {
 }
 
 tasks {
+    val runner = create<Jar>("runner") {
+        dependsOn(project(":runner").tasks.jar)
+    }
+
     register<DefaultTask>("binary") {
-        println(project(":runner").tasks.jar.get().archiveFile.get())
+        dependsOn(project(":runner").tasks.jar)
         dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 
     named<JavaExec>("run") {
-        println(project(":runner").tasks.jar.get().archiveFile.get())
+        dependsOn(runner)
         dependsOn(project(":mcsr").tasks.run)
     }
 }

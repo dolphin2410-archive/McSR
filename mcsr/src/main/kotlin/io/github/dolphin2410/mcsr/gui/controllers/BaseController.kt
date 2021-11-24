@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane
 
 open class BaseController {
 
+    lateinit var loader: FXMLLoader
+
     @FXML
     lateinit var closeBtn: Button
 
@@ -22,6 +24,8 @@ open class BaseController {
     }
 
     open fun load(loader: FXMLLoader) {
-        loader.getRoot<Pane>().stylesheets.add(javaClass.classLoader.getResource("app.css")!!.toExternalForm())
+        loader.getRoot<Pane>().stylesheets.add(javaClass.classLoader.getResource("style/app.css")!!.toExternalForm())
+
+        this.loader = loader
     }
 }

@@ -2,6 +2,8 @@ package io.github.dolphin2410.mcsr.gui.controllers
 
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import javafx.fxml.FXML
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
 import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.image.Image
@@ -39,12 +41,13 @@ class HomeController: BaseController() {
                 engine.loadContent(javaClass.classLoader.getResource("credit.html")!!.readText())
                 setPrefSize(500.0, 230.0)
             }
-            dialogPane.stylesheets.add(javaClass.classLoader.getResource("app.css")!!.toExternalForm())
+            dialogPane.stylesheets.add(javaClass.classLoader.getResource("style/app.css")!!.toExternalForm())
             showAndWait()
         }
     }
 
     override fun initialize() {
-        icon.fill = ImagePattern(Image(javaClass.classLoader.getResource("icon.png")!!.openStream()))
+        icon.fill = ImagePattern(Image(javaClass.classLoader.getResource("assets/icon.png")!!.openStream()))
+        loader.getRoot<Parent>().stylesheets.add(javaClass.classLoader.getResource("style/transparent.css")!!.toExternalForm())
     }
 }
