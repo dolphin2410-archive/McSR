@@ -15,7 +15,6 @@ tasks {
             from (if(it.isDirectory) it else zipTree(it))
         })
 
-        archiveFileName.set("runner.jar")
-        destinationDirectory.set(File(project.rootDir, "mcsr/src/main/resources"))
+        println("JarTask...")
     }
 }

@@ -56,13 +56,13 @@ project(":mcsr") {
 }
 
 tasks {
-    create("binary") {
-        dependsOn(project(":runner").tasks.jar.get())
+    register<DefaultTask>("binary") {
+        println(project(":runner").tasks.jar.get().archiveFile.get())
         dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 
     named<JavaExec>("run") {
-        dependsOn(project(":runner").tasks.jar.get())
+        println(project(":runner").tasks.jar.get().archiveFile.get())
         dependsOn(project(":mcsr").tasks.run)
     }
 }
