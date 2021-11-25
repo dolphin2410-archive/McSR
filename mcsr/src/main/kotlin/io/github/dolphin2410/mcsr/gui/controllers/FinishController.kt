@@ -7,15 +7,15 @@ import javafx.scene.control.TextField
 
 class FinishController : ScriptGenerator() {
     @FXML
-    lateinit var folder: TextField
+    lateinit var file: TextField
 
     @FXML
     lateinit var name: TextField
 
     @FXML
     override fun next() {
-        if (folder.text != "" && name.text != "") {
-            this.config.serverFolder.set(folder.text)
+        if (file.text != "" && name.text != "") {
+            this.config.filename.set(file.text)
             ConfigurationManager.addConfig(name.text, this.config)
             SceneManager.build(this.config)
         } else {

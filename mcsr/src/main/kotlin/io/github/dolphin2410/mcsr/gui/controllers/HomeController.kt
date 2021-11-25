@@ -1,5 +1,6 @@
 package io.github.dolphin2410.mcsr.gui.controllers
 
+import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import javafx.fxml.FXML
@@ -26,6 +27,9 @@ class HomeController: BaseController() {
     lateinit var icon: Circle
 
     @FXML
+    lateinit var load: Button
+
+    @FXML
     fun createNew() {
         SceneManager.loadServerSetup(true)
     }
@@ -49,6 +53,9 @@ class HomeController: BaseController() {
 
     override fun initialize() {
         icon.fill = ImagePattern(Image(ResourceManager.stream(javaClass, "/assets/icon.png")))
+        load.setOnMouseClicked {
+            SceneManager.build(McSRConfig.of())
+        }
     }
 
     override fun load(loader: FXMLLoader) {

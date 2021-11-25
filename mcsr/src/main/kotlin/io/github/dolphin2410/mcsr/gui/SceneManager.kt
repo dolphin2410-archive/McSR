@@ -1,6 +1,7 @@
 package io.github.dolphin2410.mcsr.gui
 
 import io.github.dolphin2410.mcsr.MCSR
+import io.github.dolphin2410.mcsr.api.config.config.saveConfig
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.config.parser.ConfigManager
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
@@ -9,15 +10,16 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.io.File
+import java.net.URI
+import java.nio.charset.StandardCharsets
+import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import java.util.*
 import java.util.jar.JarEntry
-import java.util.jar.JarFile
-import java.util.jar.JarInputStream
 import java.util.jar.JarOutputStream
-import java.util.zip.ZipEntry
+
 
 object SceneManager {
     private val homeLoader = FXMLLoader()
@@ -59,12 +61,16 @@ object SceneManager {
     }
 
     fun build(config: McSRConfig) {
+        config.saveConfig()
         val configStream = ConfigManager.serialize(config)
         val bos = ByteArrayOutputStream()
-        val jarStream = JarOutputStream(bos.apply(ResourceManager.stream(javaClass, "/assets/runner.jar")::transferTo))
-        jarStream.putNextEntry(JarEntry("config.mcsrc"))
-        configStream.second.writeTo(jarStream)
-        Files.copy(ByteArrayInputStream(bos.toByteArray()), Paths.get("./my.jar"))
+        JarOutputStream(bos.apply(ResourceManager.stream(javaClass, "/assets/runner.jar")::transferTo))
+        Files.copy(ByteArrayInputStream(bos.toByteArray()), Paths.get(config.filename.get()))
+
+        val path = Paths.get(config.filename.get())
+        FileSystems.newFileSystem(URI.create("jar:" + path.toUri()), hashMapOf("create" to "true")).use { fs ->
+            Files.copy(ByteArrayInputStream(configStream.second.toByteArray()), fs.getPath("config.mcsrc"))
+        }
 
         MCSR.gui.loadScene(home, homeLoader)
     }

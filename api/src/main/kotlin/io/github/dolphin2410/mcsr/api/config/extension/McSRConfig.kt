@@ -3,6 +3,7 @@ package io.github.dolphin2410.mcsr.api.config.extension
 import io.github.dolphin2410.mcsr.api.config.AbstractConfiguration
 import io.github.dolphin2410.mcsr.api.config.Variable
 import io.github.dolphin2410.mcsr.api.config.config.Config
+import io.github.dolphin2410.mcsr.api.config.config.loadConfig
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
 
@@ -16,7 +17,8 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
             serverFolder: String = "./server/",
             serverSoftware: ScriptType = ScriptType.AROXU,
             memory: String = "1G",
-            serverUrl: String = PaperData.latestJarUrl
+            serverUrl: String = PaperData.latestJarUrl,
+            filename: String = "default.jar"
         ): McSRConfig {
             return McSRConfig().apply {
                 set("jvmArgs", jvmArgs)
@@ -26,9 +28,15 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
                 set("serverSoftware", serverSoftware.name)
                 set("memory", memory)
                 set("serverUrl", serverUrl)
+                set("filename", filename)
+
+                loadConfig()
             }
         }
     }
+
+    @Config
+    val filename = Variable<String>()
 
     // JvmArguments
     @Config

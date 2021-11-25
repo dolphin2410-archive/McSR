@@ -61,7 +61,7 @@ tasks {
     }
 
     register<DefaultTask>("binary") {
-        dependsOn(project(":runner").tasks.jar)
+        dependsOn(runner)
         dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 

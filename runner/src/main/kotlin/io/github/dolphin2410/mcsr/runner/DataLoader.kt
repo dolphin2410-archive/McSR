@@ -23,7 +23,7 @@ object DataLoader {
 
         when (config.serverSoftware.get().asEnum<ScriptType>()) {
             ScriptType.MONUN -> {
-                val process = ProcessBuilder("wsl", "./${path.toAbsolutePath()}", "launch")
+                val process = ProcessBuilder("wsl", "${path.toAbsolutePath()}", "launch")
                     .directory(folder.toFile())
                     .start()
 
@@ -31,7 +31,7 @@ object DataLoader {
             }
 
             ScriptType.AROXU -> {
-                val process = ProcessBuilder("./${path.toAbsolutePath()}")
+                val process = ProcessBuilder("${path.toAbsolutePath()}")
                     .directory(folder.toFile())
                     .start()
 

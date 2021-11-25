@@ -33,6 +33,7 @@ object ConfigManager {
                 }
             }
             writeByte(0)
+            flush()
         } to bos
     }
 }

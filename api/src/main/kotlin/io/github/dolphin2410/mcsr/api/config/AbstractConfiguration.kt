@@ -3,7 +3,7 @@ package io.github.dolphin2410.mcsr.api.config
 import kotlin.collections.HashMap
 
 open class AbstractConfiguration<T: AbstractConfiguration<T>> {
-    protected val map = HashMap<String, ConfigValue>()
+    val map = HashMap<String, ConfigValue>()
 
     internal val data: Map<String, ConfigValue>
         get() = map.toMap()
