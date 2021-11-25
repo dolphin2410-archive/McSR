@@ -4,6 +4,7 @@ import kotlin.collections.HashMap
 
 open class AbstractConfiguration<T: AbstractConfiguration<T>> {
     val map = HashMap<String, ConfigValue>()
+    val scriptConfigMap = HashMap<String, ConfigValue>()
 
     internal val data: Map<String, ConfigValue>
         get() = map.toMap()
@@ -31,17 +32,25 @@ open class AbstractConfiguration<T: AbstractConfiguration<T>> {
 
     fun loadFrom(other: AbstractConfiguration<*>): T {
         map.clear()
+        scriptConfigMap.clear()
         other.map.forEach {
             map[it.key] = it.value
+        }
+        other.scriptConfigMap.forEach {
+            scriptConfigMap[it.key] = it.value
         }
         @Suppress("unchecked_cast")
         return this as T
     }
 
-    fun loadFrom(map: Map<String, ConfigValue>) {
+    fun loadFrom(map: Map<String, ConfigValue>, scriptConfigMap: Map<String, ConfigValue>) {
         this.map.clear()
+        this.scriptConfigMap.clear()
         map.forEach {
             this.map[it.key] = it.value
+        }
+        scriptConfigMap.forEach {
+            this.scriptConfigMap[it.key] = it.value
         }
     }
 

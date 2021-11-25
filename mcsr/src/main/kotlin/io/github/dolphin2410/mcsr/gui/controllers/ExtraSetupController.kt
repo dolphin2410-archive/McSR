@@ -39,7 +39,7 @@ class ExtraSetupController: ScriptGenerator() {
             this.config.jvmArgs.set(jvmArgs.text)
             this.config.autoBackup.set(autoBackup.isSelected)
             this.config.autoReload.set(autoRestart.isSelected)
-            this.config.memory.set(memory.text)
+            this.config.memory.set(memory.text.toIntOrNull() ?: 1)
             SceneManager.loadScript(this.config)
         } else {
             println("Please Input Folder and Memory")

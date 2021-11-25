@@ -11,6 +11,7 @@ open module api {
     exports io.github.dolphin2410.mcsr.api.config.config;
     exports io.github.dolphin2410.mcsr.api.config.parser;
     exports io.github.dolphin2410.mcsr.api.config.extension;
+    exports io.github.dolphin2410.mcsr.api.config.mappers;
     exports io.github.dolphin2410.mcsr.api.config;
     exports io.github.dolphin2410.mcsr.api.util;
     exports io.github.dolphin2410.mcsr.api.util.data;

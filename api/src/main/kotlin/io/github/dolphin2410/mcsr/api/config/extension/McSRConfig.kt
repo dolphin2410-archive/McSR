@@ -3,6 +3,7 @@ package io.github.dolphin2410.mcsr.api.config.extension
 import io.github.dolphin2410.mcsr.api.config.AbstractConfiguration
 import io.github.dolphin2410.mcsr.api.config.Variable
 import io.github.dolphin2410.mcsr.api.config.config.Config
+import io.github.dolphin2410.mcsr.api.config.config.ScriptConfig
 import io.github.dolphin2410.mcsr.api.config.config.loadConfig
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
@@ -16,7 +17,7 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
             autoBackup: Boolean = false,
             serverFolder: String = "./server/",
             serverSoftware: ScriptType = ScriptType.AROXU,
-            memory: String = "1G",
+            memory: Int = 1,
             serverUrl: String = PaperData.latestJarUrl,
             filename: String = "default.jar"
         ): McSRConfig {
@@ -40,14 +41,17 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
 
     // JvmArguments
     @Config
+    @ScriptConfig
     val jvmArgs = Variable<String>()
 
     // 자동 리로드
     @Config
+    @ScriptConfig
     val autoReload = Variable<Boolean>()
 
     // 자동 백업
     @Config
+    @ScriptConfig
     val autoBackup = Variable<Boolean>()
 
     // 서버가 생성되는 위치
@@ -60,10 +64,12 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
 
     // 할당할 메모리
     @Config
-    val memory = Variable<String>()
+    @ScriptConfig
+    val memory = Variable<Int>()
 
     // 서버 프로그램 URL
     @Config
+    @ScriptConfig
     val serverUrl = Variable<String>()
 
     fun toJson(): JsonConfig {

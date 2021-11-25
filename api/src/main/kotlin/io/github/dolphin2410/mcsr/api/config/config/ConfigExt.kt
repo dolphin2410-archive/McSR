@@ -10,7 +10,6 @@ fun AbstractConfiguration<*>.loadConfig() {
             it.isAccessible = true
             val variable = it.get(this) as Variable<*>
             variable.forceSet(this.data[it.name]?.value ?: throw RuntimeException("Missing Configuration Field"))
-            println("${it.name} loaded!")
         }
     }
 }
@@ -21,7 +20,13 @@ fun AbstractConfiguration<*>.saveConfig() {
             it.isAccessible = true
             (it.get(this) as Variable<*>).getSafe()?.let { variable ->
                 map[it.name] = ConfigValue.force(variable)
-                println("${it.name} saved!")
+            }
+        }
+
+        if (it.isAnnotationPresent(ScriptConfig::class.java)) {
+            it.isAccessible = true
+            (it.get(this) as Variable<*>).getSafe()?.let { variable ->
+                scriptConfigMap[it.name] = ConfigValue.force(variable)
             }
         }
     }
