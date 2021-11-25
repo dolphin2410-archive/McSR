@@ -14,9 +14,9 @@
                 <Font name="Arial Italic" size="31.0" />
             </font>
         </Label>
-        <Circle fill="#c7c7c7" layoutX="154.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-        <Circle fill="#c7c7c7" layoutX="400.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-        <Circle fill="#c7c7c7" layoutX="646.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+        <Circle fx:id="aroxu" fill="#c7c7c7" layoutX="154.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+        <Circle fx:id="monun" fill="#c7c7c7" layoutX="400.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+        <Circle fx:id="add" fill="#c7c7c7" layoutX="646.0" layoutY="250.0" radius="80.0" stroke="TRANSPARENT" strokeType="INSIDE" />
         <Button layoutX="716.0" layoutY="443.0" mnemonicParsing="false" onAction="#next" text="Next" />
         <Label layoutX="128.0" layoutY="350.0" text="Aroxu">
             <font>

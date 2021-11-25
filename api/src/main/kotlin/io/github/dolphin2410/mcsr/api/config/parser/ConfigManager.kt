@@ -20,8 +20,9 @@ object ConfigManager {
         }
     }
 
-    fun serialize(config: McSRConfig): OutputStream {
-        return DataOutputStream(ByteArrayOutputStream()).apply {
+    fun serialize(config: McSRConfig): Pair<DataOutputStream, ByteArrayOutputStream> {
+        val bos = ByteArrayOutputStream()
+        return DataOutputStream(bos).apply {
             config.data.forEach {
                 writeByte(1)
                 writeUTF(it.key)
@@ -32,6 +33,6 @@ object ConfigManager {
                 }
             }
             writeByte(0)
-        }
+        } to bos
     }
 }

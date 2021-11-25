@@ -3,6 +3,7 @@ package io.github.dolphin2410.mcsr.gui.controllers
 import io.github.dolphin2410.mcsr.api.util.ServerProgram
 import io.github.dolphin2410.mcsr.api.util.data.MinecraftData
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
+import io.github.dolphin2410.mcsr.api.util.data.ServerData
 import io.github.dolphin2410.mcsr.api.util.data.SpigotData
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import io.github.dolphin2410.mcsr.gui.util.ServerSetupMode
@@ -13,7 +14,7 @@ import javafx.scene.control.ComboBox
 import javafx.scene.control.TextField
 import javafx.scene.control.TitledPane
 
-class ServerSetupController : BaseController() {
+class ServerSetupController : ScriptGenerator() {
     @FXML
     lateinit var server: ComboBox<String>
 
@@ -89,18 +90,21 @@ class ServerSetupController : BaseController() {
     }
 
     @FXML
-    fun next() {
+    override fun next() {
         if (mode == ServerSetupMode.URL && urlField.text != "") {
-            SceneManager.loadExtraSetup()
+            this.config.serverUrl.set(urlField.text)
+            SceneManager.loadExtraSetup(this.config)
         } else if (mode == ServerSetupMode.GUI && version.selectionModel.selectedItem != null && server.selectionModel.selectedItem != null && build.selectionModel.selectedItem != null) {
-            SceneManager.loadExtraSetup()
+            this.config.serverUrl.set(ServerProgram.from(server.selectionModel.selectedItem).data.buildUrl(version.selectionModel.selectedItem, build.selectionModel.selectedItem).toString())
+            SceneManager.loadExtraSetup(this.config)
         } else {
-            println("Please input ")
+            println("Please input!!!")
         }
     }
 
     @FXML
-    fun cancel() {
+    override fun cancel() {
+        super.cancel()
         SceneManager.loadHome()
     }
 }
