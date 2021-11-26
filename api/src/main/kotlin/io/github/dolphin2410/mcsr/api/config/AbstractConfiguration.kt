@@ -1,5 +1,6 @@
 package io.github.dolphin2410.mcsr.api.config
 
+import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
 import kotlin.collections.HashMap
 
 open class AbstractConfiguration<T: AbstractConfiguration<T>> {
@@ -10,6 +11,10 @@ open class AbstractConfiguration<T: AbstractConfiguration<T>> {
         get() = map.toMap()
 
     operator fun set(key: String, value: Int) {
+        map[key] = ConfigValue(value)
+    }
+
+    operator fun set(key: String, value: StringArray) {
         map[key] = ConfigValue(value)
     }
 
@@ -26,6 +31,7 @@ open class AbstractConfiguration<T: AbstractConfiguration<T>> {
             is Int -> ConfigValue(value)
             is String -> ConfigValue(value)
             is Boolean -> ConfigValue(value)
+            is StringArray -> ConfigValue(value)
             else -> throw RuntimeException("")
         }
     }
@@ -68,5 +74,9 @@ open class AbstractConfiguration<T: AbstractConfiguration<T>> {
 
     fun getBoolean(key: String): Boolean {
         return map[key]?.value as? Boolean ?: throw RuntimeException("No such boolean value: $key")
+    }
+
+    fun getStringArray(key: String): StringArray {
+        return map[key]?.value as? StringArray ?: throw RuntimeException("No such StringArray value: $key")
     }
 }

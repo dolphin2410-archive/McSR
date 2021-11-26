@@ -1,7 +1,11 @@
 package io.github.dolphin2410.mcsr.gui.controllers
 
+import io.github.dolphin2410.mcsr.MCSR
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
+import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
+import io.github.dolphin2410.mcsr.api.util.wrapper.PropertyObserver
+import io.github.dolphin2410.mcsr.config.ConfigurationManager
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -12,7 +16,9 @@ import javafx.scene.image.Image
 import javafx.scene.paint.ImagePattern
 import javafx.scene.shape.Circle
 import javafx.scene.web.WebView
+import javafx.stage.FileChooser
 import javafx.stage.StageStyle
+import java.lang.module.Configuration
 
 
 class HomeController: BaseController() {
@@ -28,6 +34,9 @@ class HomeController: BaseController() {
 
     @FXML
     lateinit var load: Button
+
+    @FXML
+    lateinit var dev: Button
 
     @FXML
     fun createNew() {
@@ -54,8 +63,28 @@ class HomeController: BaseController() {
     override fun initialize() {
         icon.fill = ImagePattern(Image(ResourceManager.stream(javaClass, "/assets/icon.png")))
         load.setOnMouseClicked {
+            FileChooser().apply {
+                extensionFilters.addAll(
+                    FileChooser.ExtensionFilter("McSRConfig", "*.mcsrc")
+                )
+            }.showOpenDialog(MCSR.gui.stage)?.let {
+                ConfigurationManager.addConfig(it.nameWithoutExtension, ConfigSerializer.deserialize(it.inputStream()))
+            }
+        }
+
+        ConfigurationManager.loadConfig()
+
+        dev.setOnMouseClicked {
             SceneManager.build(McSRConfig.of())
         }
+
+        ConfigurationManager.map.clearObservers()
+
+        ConfigurationManager.map.addObserver(object: PropertyObserver<ArrayList<Pair<String, McSRConfig>>> {
+            override fun accept(t: ArrayList<Pair<String, McSRConfig>>) {
+                list.items.setAll(ConfigurationManager.map.data.map { it.first })
+            }
+        })
     }
 
     override fun load(loader: FXMLLoader) {

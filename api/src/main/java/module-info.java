@@ -16,6 +16,7 @@ open module api {
     exports io.github.dolphin2410.mcsr.api.util;
     exports io.github.dolphin2410.mcsr.api.util.data;
     exports io.github.dolphin2410.mcsr.api.util.web;
+    exports io.github.dolphin2410.mcsr.api.util.wrapper;
     exports io.github.dolphin2410.mcsr.api.script;
     exports io.github.dolphin2410.mcsr.api.gui;
     exports io.github.dolphin2410.mcsr.api;

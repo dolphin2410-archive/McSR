@@ -18,8 +18,8 @@ object PaperData: ServerData {
 
     init {
         versions = fetchVersions()
-        latestVersion = versions.last()
-        latestBuild = fetchBuilds(latestVersion).last()
+        latestVersion = versions.first()
+        latestBuild = fetchBuilds(latestVersion).first()
         latestJarUrl = "https://papermc.io/api/v2/projects/paper/versions/$latestVersion/builds/$latestBuild/downloads/paper-$latestVersion-$latestBuild.jar"
     }
 

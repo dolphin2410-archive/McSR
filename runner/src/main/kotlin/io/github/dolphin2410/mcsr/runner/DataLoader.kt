@@ -3,10 +3,9 @@ package io.github.dolphin2410.mcsr.runner
 import io.github.dolphin2410.mcsr.api.config.config.asEnum
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.config.mappers.AroxuMapper
-import io.github.dolphin2410.mcsr.api.config.parser.ConfigManager
+import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
-import java.io.FileNotFoundException
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
@@ -15,7 +14,7 @@ import java.util.zip.ZipFile
 
 object DataLoader {
     fun loadConfig(): McSRConfig {
-        return ConfigManager.deserialize(
+        return ConfigSerializer.deserialize(
             ResourceManager.stream(javaClass, "config.mcsrc"))
     }
 

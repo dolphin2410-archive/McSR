@@ -1,6 +1,6 @@
-package io.github.dolphin2410.mcsr.api.config
+package io.github.dolphin2410.mcsr.api.util.wrapper
 
-class Variable<T> {
+class Property<T> {
     private var data: T? = null
 
     fun set(value: T) {

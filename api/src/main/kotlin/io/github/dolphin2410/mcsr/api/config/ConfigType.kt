@@ -1,9 +1,12 @@
 package io.github.dolphin2410.mcsr.api.config
 
+import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
+
 enum class ConfigType(val code: Byte, val type: Class<*>) {
     BOOLEAN(0, Boolean::class.java),
     INTEGER(1, Int::class.java),
-    STRING(2, String::class.java);
+    STRING(2, String::class.java),
+    STRING_ARRAY(3, StringArray::class.java);
 
     companion object {
         @JvmStatic

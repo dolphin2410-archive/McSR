@@ -16,7 +16,7 @@ class FinishController : ScriptGenerator() {
     override fun next() {
         if (file.text != "" && name.text != "") {
             this.config.filename.set(file.text)
-            ConfigurationManager.addConfig(name.text, this.config)
+            this.config.name.set(name.text)
             SceneManager.build(this.config)
         } else {
             println("Please Input")
