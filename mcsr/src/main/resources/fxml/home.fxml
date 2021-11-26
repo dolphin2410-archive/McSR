@@ -29,7 +29,6 @@
                         <Button fx:id="make" layoutX="80.0" layoutY="38.0" mnemonicParsing="false" onAction="#createNew" prefHeight="10.0" prefWidth="80.0" text="새로 만들기" />
                         <Button fx:id="load" layoutY="38.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="불러오기" />
                         <Button fx:id="closeBtn" layoutX="362.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" text="✖" />
-                  <Button fx:id="dev" layoutX="168.0" layoutY="38.0" mnemonicParsing="false" text="dev" />
                     </children>
                 </Pane>
                 <ListView fx:id="list" prefHeight="430.0" prefWidth="400.0" />

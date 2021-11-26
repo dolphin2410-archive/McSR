@@ -3,6 +3,11 @@ Minecraft Server Runner Program. Written in Kotlin (GUI + CLI)
 
 ## 공지
 이 프로젝트는 [qogusdn1017](https://github.com/qogusdn1017) 님의 [McSR](https://github.com/qogusdn1017/McSR) 프로젝트의 포크 버전입니다.
+
+## 스크린샷
+![Home](docs/assets/home.png)
+> 나머지는 [여기](docs/screenshots.md)
+
 ## 의존성
 - [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
 - [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)

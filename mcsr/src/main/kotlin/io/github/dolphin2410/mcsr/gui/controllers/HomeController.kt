@@ -36,9 +36,6 @@ class HomeController: BaseController() {
     lateinit var load: Button
 
     @FXML
-    lateinit var dev: Button
-
-    @FXML
     fun createNew() {
         SceneManager.loadServerSetup(true)
     }
@@ -73,10 +70,6 @@ class HomeController: BaseController() {
         }
 
         ConfigurationManager.loadConfig()
-
-        dev.setOnMouseClicked {
-            SceneManager.build(McSRConfig.of())
-        }
 
         ConfigurationManager.map.clearObservers()
 
