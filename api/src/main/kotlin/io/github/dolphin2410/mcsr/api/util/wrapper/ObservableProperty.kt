@@ -10,8 +10,9 @@ class ObservableProperty<T>(val data: T) {
         }
     }
 
-    fun addObserver(observer: PropertyObserver<T>) {
+    fun addObserver(observer: PropertyObserver<T>, init: Boolean) {
         _observers.add(observer)
+        if (init) observer.accept(data)
     }
 
     fun removeObserver(observer: PropertyObserver<T>) {

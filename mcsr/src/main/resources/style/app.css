@@ -2,9 +2,18 @@
     -fx-background-color: transparent;
 }
 
+.root {
+    -fx-background-color: white;
+}
+
 .button {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
+}
+
+.button:focused {
+     -fx-focus-color: transparent;
+     -fx-faint-focus-color: transparent;
 }
 
 #make {
@@ -19,5 +28,32 @@
 
 #load {
     -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.creditsAlert > *.button-bar > *.container {
+    -fx-background-color: black;
+    -fx-border-color: transparent;
+}
+
+.creditsAlert > *.button-bar > *.container > *.button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.creditsAlert:no-header .graphic-container {
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-padding: 10;
+}
+
+.listbox {
+    -fx-background-color: rgb(237, 237, 237);
+    -fx-padding: 10;
+}
+
+.listbox .label {
     -fx-text-fill: black;
 }

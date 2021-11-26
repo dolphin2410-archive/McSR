@@ -22,6 +22,7 @@ object ConfigurationManager {
         internalMap.clear()
         DataInputStream(FileInputStream(configFile)).apply {
             while (read() != -1) {
+                // FIXME BUG!!!!
                 val name = readUTF()
                 val size = readInt()
                 val inputStream = ByteArrayInputStream(ByteArray(size) {

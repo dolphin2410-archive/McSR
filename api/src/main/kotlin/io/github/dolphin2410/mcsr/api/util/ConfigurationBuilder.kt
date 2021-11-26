@@ -17,6 +17,7 @@ object ConfigurationBuilder {
         val configStream = ConfigSerializer.serialize(config)
         val bos = ByteArrayOutputStream()
         JarOutputStream(bos.apply(ResourceManager.stream(MCSRLoader.mcsr.javaClass, "/assets/runner.jar")::transferTo))
+        // TODO handle without replacing
         Files.copy(ByteArrayInputStream(bos.toByteArray()), Paths.get(config.filename.get()), StandardCopyOption.REPLACE_EXISTING)
 
         val path = Paths.get(config.filename.get())

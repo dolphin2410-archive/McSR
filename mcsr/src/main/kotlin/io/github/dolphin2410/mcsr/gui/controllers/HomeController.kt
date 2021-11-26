@@ -7,6 +7,7 @@ import io.github.dolphin2410.mcsr.api.util.ResourceManager
 import io.github.dolphin2410.mcsr.api.util.wrapper.PropertyObserver
 import io.github.dolphin2410.mcsr.config.ConfigurationManager
 import io.github.dolphin2410.mcsr.gui.SceneManager
+import io.github.dolphin2410.mcsr.gui.components.ConfigurationBar
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -27,7 +28,7 @@ class HomeController: BaseController() {
     lateinit var credits: Button
 
     @FXML
-    lateinit var list: ListView<String>
+    lateinit var list: ListView<Pair<String, McSRConfig>>
 
     @FXML
     lateinit var icon: Circle
@@ -47,12 +48,13 @@ class HomeController: BaseController() {
         ).apply {
             buttonTypes.add(ButtonType.OK)
             initStyle(StageStyle.UNDECORATED)
-            initOwner(io.github.dolphin2410.mcsr.MCSR.gui.stage)
+            initOwner(MCSR.gui.stage)
             dialogPane.content = WebView().apply {
                 engine.loadContent(ResourceManager.resource(this@HomeController.javaClass, "/assets/credit.html").readText())
                 setPrefSize(500.0, 230.0)
             }
             dialogPane.stylesheets.add(ResourceManager.resource(this@HomeController.javaClass, "/style/app.css").toExternalForm())
+            dialogPane.styleClass.add("creditsAlert")
             showAndWait()
         }
     }
@@ -75,9 +77,13 @@ class HomeController: BaseController() {
 
         ConfigurationManager.map.addObserver(object: PropertyObserver<ArrayList<Pair<String, McSRConfig>>> {
             override fun accept(t: ArrayList<Pair<String, McSRConfig>>) {
-                list.items.setAll(ConfigurationManager.map.data.map { it.first })
+                list.items.setAll(ConfigurationManager.map.data.map { it.first to it.second })
             }
-        })
+        }, true)
+
+        list.setCellFactory {
+            ConfigurationBar()
+        }
     }
 
     override fun load(loader: FXMLLoader) {

@@ -62,6 +62,5 @@ object SceneManager {
         ConfigurationBuilder.build(config)
         MCSR.gui.loadScene(home, homeLoader)
         ConfigurationManager.addConfig(config.name.get(), config)
-
     }
 }
