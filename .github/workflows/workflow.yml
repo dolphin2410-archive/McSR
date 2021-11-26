@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mac-bin.zip
-          path: build/McSR-bin.zip
+          path: mcsr/build/mcsr-bin.zip
 #      - name: Installer
 #        uses: actions/upload-artifact@v2
 #        with:
@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows-bin.zip
-          path: build/McSR-bin.zip
+          path: mcsr/build/mcsr-bin.zip
 #      - name: Installer
 #        uses: actions/upload-artifact@v2
 #        with:
@@ -64,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: debian-bin.zip
-          path: build/McSR-bin.zip
+          path: mcsr/build/mcsr-bin.zip
 #      - name: Installer
 #        uses: actions/upload-artifact@v2
 #        with:
