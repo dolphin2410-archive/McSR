@@ -1,6 +1,8 @@
 package io.github.dolphin2410.mcsr.api.config.parser
 
 import io.github.dolphin2410.mcsr.api.config.ConfigType
+import io.github.dolphin2410.mcsr.api.config.config.loadConfig
+import io.github.dolphin2410.mcsr.api.config.config.saveConfig
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
 import java.io.*
@@ -23,11 +25,13 @@ object ConfigSerializer {
                     }
                 })
             }
+            loadConfig()
         }
     }
 
     fun serialize(config: McSRConfig): Pair<DataOutputStream, ByteArrayOutputStream> {
         val bos = ByteArrayOutputStream()
+        config.saveConfig()
         return DataOutputStream(bos).apply {
             config.data.forEach {
                 // This will determine whether the stream reached the end
