@@ -1,6 +1,7 @@
 package io.github.dolphin2410.mcsr.cli
 
 import io.github.dolphin2410.mcsr.api.cli.AbstractCLIManager
+import io.github.dolphin2410.mcsr.api.cli.CommandArguments
 import io.github.dolphin2410.mcsr.api.cli.parser.CommandParser
 import io.github.dolphin2410.mcsr.api.cli.parser.ParseResult
 import java.io.BufferedReader
@@ -12,21 +13,16 @@ class CLIManager: AbstractCLIManager {
     override val parsers: List<CommandParser>
         get() = _parsers.toList()
 
-    override fun start() {
-        while (true) {
-            run {
-                    print("> ")
-                    val reader = BufferedReader(InputStreamReader(System.`in`))
-                    val cmd = reader.readLine()
-                    _parsers.forEach {
-                        if (it.parse(
-                                io.github.dolphin2410.mcsr.api.cli.CommandArguments(
-                                    cmd.replace("\\s+".toRegex(), " ").split("('.*?'|\".*?\"|\\S+)".toRegex())
-                                )
-                            ) == ParseResult.SUCCESS) return@run
-                    }
-                    println("No such command found")
+    override fun start(cmd: Array<String>) {
+        run {
+            _parsers.forEach {
+                if (it.parse(
+                    CommandArguments(
+                        cmd.toList()
+                    )
+                ) == ParseResult.SUCCESS) return@run
             }
+            println("No such command found")
         }
     }
 

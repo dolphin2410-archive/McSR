@@ -1,0 +1,23 @@
+{
+  "base.next": "다음",
+  "base.cancel": "취소",
+  "base.finish": "마치기",
+  "home.credits": "credits",
+  "home.load": "불러오기",
+  "home.new": "새로 만들기",
+  "home.export": "내보내기",
+  "server_setup.title": "서버 설정하기",
+  "server_setup.server": "서버",
+  "server_setup.version": "버전",
+  "server_setup.build": "빌드",
+  "server_setup.url": "URL",
+  "extra_setup.title": "부가설정",
+  "extra_setup.server_folder": "서버 폴더",
+  "extra_setup.memory": "메모리",
+  "extra_setup.auto_restart": "자동 재시작",
+  "extra_setup.auto_backup": "자동 백업",
+  "extra_setup.jvmArgs": "JvmArgs",
+  "script.title": "서버 스크립트",
+  "finish.config_name": "설정 이름",
+  "finish.runner_name": "실행기 이름"
+}

@@ -8,6 +8,7 @@ import java.net.URL
 
 object PaperData: ServerData {
     override val versions: List<String>
+
     val latestJarUrl: String
 
     @Suppress("WeakerAccess")

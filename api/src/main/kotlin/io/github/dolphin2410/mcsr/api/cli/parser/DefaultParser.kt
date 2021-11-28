@@ -7,27 +7,22 @@ import kotlin.system.exitProcess
 object DefaultParser: CommandParser {
     override fun parse(commands: CommandArguments): ParseResult {
         return commands.parse {
-            command("launch") {
-
-                flag("nogui") {
-                    println("WA")
+            command {
+                val type = argumentFlag("server-type={type}") { data ->
+                    data["type"]
                 }
 
-                noflag("nogui") {
-                    println("GUI!")
+                val version = argumentFlag("version={version}") { data ->
+                    data["version"]
                 }
 
-                MCSRLoader.mcsr.gui.close()
-            }
+                val serverDirectory = argumentFlag("server-directory={serverDirectory}") { data ->
+                    data["serverDirectory"]
+                }
 
-            command("export-config") {
-                println("Exporting config")
-            }
-
-            command("exit") {
-                println("GOODBYE!")
-                MCSRLoader.mcsr.gui.close()
-                exitProcess(0)
+                val memory = argumentFlag("memory={memory}") { data ->
+                    data["memory"]
+                }
             }
         }
     }

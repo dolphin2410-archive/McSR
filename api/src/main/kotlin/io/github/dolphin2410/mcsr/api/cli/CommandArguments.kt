@@ -42,11 +42,13 @@ class CommandArguments(private val initArgs: List<String>) {
         if (flag(name, *alias)) then(this)
     }
 
-    fun argumentFlag(pattern: String, then: CommandArguments.(HashMap<String, String>) -> Unit) {
+    fun <R> argumentFlag(pattern: String, then: CommandArguments.(HashMap<String, String>) -> R): R? {
         val matching = flags.find { TemplateMatcher.doesMatch(pattern, it.removeSuffix("-").removeSuffix("-")) }
         if (matching != null) {
-            then(this, TemplateMatcher.match(pattern, matching))
+            return then(this, TemplateMatcher.match(pattern, matching))
         }
+
+        return null
     }
 
     fun input(then: CommandArguments.(String) -> Unit) {

@@ -1,6 +1,9 @@
 package io.github.dolphin2410.mcsr.gui
 
 import io.github.dolphin2410.mcsr.api.gui.AbstractGUIManager
+import io.github.dolphin2410.mcsr.api.util.data.MinecraftData
+import io.github.dolphin2410.mcsr.api.util.data.PaperData
+import io.github.dolphin2410.mcsr.api.util.data.SpigotData
 import io.github.dolphin2410.mcsr.gui.controllers.BaseController
 import io.github.dolphin2410.mcsr.gui.util.center
 import javafx.fxml.FXMLLoader
@@ -13,6 +16,10 @@ class GUIManager: AbstractGUIManager {
     lateinit var stage: Stage
 
     override fun start() {
+        PaperData
+        MinecraftData
+        SpigotData
+
         SceneManager.loadHome()
         initStage()
         center(stage)

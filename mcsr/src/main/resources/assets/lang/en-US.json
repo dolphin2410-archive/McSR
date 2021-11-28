@@ -1,0 +1,23 @@
+{
+  "base.next": "next",
+  "base.cancel": "cancel",
+  "base.finish": "finish",
+  "home.credits": "credits",
+  "home.load": "load",
+  "home.new": "create",
+  "home.export": "export",
+  "server_setup.title": "Server Settings",
+  "server_setup.server": "Server",
+  "server_setup.version": "Version",
+  "server_setup.build": "Build",
+  "server_setup.url": "URL",
+  "extra_setup.title": "Extra Settings",
+  "extra_setup.server_folder": "Server Folder",
+  "extra_setup.memory": "Memory",
+  "extra_setup.auto_restart": "Auto Restart",
+  "extra_setup.auto_backup": "Auto Backup",
+  "extra_setup.jvmArgs": "JvmArgs",
+  "script.title": "Server Script",
+  "finish.config_name": "Config Name",
+  "finish.runner_name": "Runner Name"
+}
