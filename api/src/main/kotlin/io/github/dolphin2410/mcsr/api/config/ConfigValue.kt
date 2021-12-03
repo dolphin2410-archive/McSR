@@ -28,4 +28,8 @@ class ConfigValue private constructor(val value: Any, val type: ConfigType) {
             }
         }
     }
+
+    fun hash(): ByteArray {
+        return value.toString().toByteArray()
+    }
 }

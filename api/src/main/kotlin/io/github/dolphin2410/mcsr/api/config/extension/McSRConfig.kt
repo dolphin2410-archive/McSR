@@ -8,6 +8,7 @@ import io.github.dolphin2410.mcsr.api.config.config.loadConfig
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
+import java.security.MessageDigest
 
 class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
     companion object {
@@ -22,7 +23,8 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
             serverUrl: String = PaperData.latestJarUrl,
             filename: String = "default.jar",
             name: String = "sampleconf",
-            plugins: StringArray = StringArray(arrayOf())
+            plugins: StringArray = StringArray(arrayOf()),
+            hash: String = MessageDigest.getInstance("SHA3-256").digest("".toByteArray()).joinToString()
         ): McSRConfig {
             return McSRConfig().apply {
                 set("jvmArgs", jvmArgs)
@@ -35,7 +37,7 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
                 set("filename", filename)
                 set("name", name)
                 set("plugins", plugins)
-
+                set("hash", hash)
                 loadConfig()
             }
         }
@@ -48,6 +50,9 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
     @Config
     @ScriptConfig
     val jvmArgs = Property<String>()
+
+    @Config
+    val hash = Property<String>()
 
     // 자동 리로드
     @Config

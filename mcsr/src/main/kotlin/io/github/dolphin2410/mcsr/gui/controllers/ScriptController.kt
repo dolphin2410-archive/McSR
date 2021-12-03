@@ -1,58 +1,60 @@
 package io.github.dolphin2410.mcsr.gui.controllers
 
-import io.github.dolphin2410.mcsr.MCSR
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import javafx.fxml.FXML
-import javafx.scene.control.Alert
-import javafx.scene.control.ButtonType
+import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.shape.Circle
-import javafx.stage.StageStyle
-import java.awt.Desktop
-import java.net.URI
 
 class ScriptController : ScriptGenerator() {
 
     @FXML
-    lateinit var aroxu: Circle
+    lateinit var nextScript: Button
 
     @FXML
-    lateinit var monun: Circle
+    lateinit var prevScript: Button
 
     @FXML
-    lateinit var add: Circle
+    lateinit var profile: Circle
 
-    lateinit var selected: ScriptType
+    @FXML
+    lateinit var scriptName: Label
+
+    private var scriptType = ScriptType.AROXU
+
+    private val scripts = ScriptType.values()
+
+    fun update() {
+        val isLast = scripts.indexOf(scriptType) == scripts.size - 1
+
+        val isFirst = scripts.indexOf(scriptType) == 0
+
+        nextScript.isVisible = !isLast
+        prevScript.isVisible = !isFirst
+
+        scriptName.text = scriptType.name.lowercase().replaceFirstChar { it.uppercase() }
+    }
 
     @FXML
     override fun initialize() {
-        monun.setOnMouseClicked {
-            selected = ScriptType.MONUN
+        update()
+        nextScript.setOnMouseClicked {
+            scriptType = scripts[scripts.indexOf(scriptType) + 1]
+            update()
         }
 
-        aroxu.setOnMouseClicked {
-            selected = ScriptType.AROXU
-        }
-
-        add.setOnMouseClicked {
-            val alert = Alert(Alert.AlertType.INFORMATION, "If you want me to support your server-script, please create an issue on github", ButtonType.OK, ButtonType.CANCEL)
-            alert.initStyle(StageStyle.UNDECORATED)
-            alert.initOwner(MCSR.gui.stage)
-            when (alert.showAndWait().get()) {
-                ButtonType.OK -> Desktop.getDesktop().browse(URI.create("https://github.com/dolphin2410/McSR/issues/new"))
-            }
+        prevScript.setOnMouseClicked {
+            scriptType = scripts[scripts.indexOf(scriptType) - 1]
+            update()
         }
         super.initialize()
     }
 
     @FXML
     override fun next() {
-        if (::selected.isInitialized) {
-            this.config.serverSoftware.set(selected.name)
-            SceneManager.loadFinish(this.config)
-        } else {
-            println("Please...")
-        }
+        config.serverSoftware.set(scriptType.name)
+        SceneManager.loadFinish(config)
     }
 
     @FXML

@@ -66,8 +66,17 @@ class HomeController: BaseController() {
                 extensionFilters.addAll(
                     FileChooser.ExtensionFilter("McSRConfig", "*.mcsrc")
                 )
-            }.showOpenDialog(MCSR.gui.stage)?.let {
-                ConfigurationManager.addConfig(it.nameWithoutExtension, ConfigSerializer.deserialize(it.inputStream()))
+            }.showOpenDialog(MCSR.gui.stage)?.let { file ->
+                val config = ConfigSerializer.deserialize(file.inputStream())
+                if (ConfigurationManager.map.data.any { entry -> entry.second.hash.get() == config.hash.get() }) {
+                    Alert(AlertType.INFORMATION, "The Item with the same hash exists", ButtonType.OK).apply {
+                        initOwner(MCSR.gui.stage)
+                        initStyle(StageStyle.UNDECORATED)
+                        show()
+                    }
+                } else {
+                    ConfigurationManager.addConfig(file.nameWithoutExtension, config)
+                }
             }
         }
 

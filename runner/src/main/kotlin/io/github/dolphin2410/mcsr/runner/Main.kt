@@ -11,6 +11,13 @@ class Main {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
+
+            Runtime.getRuntime().addShutdownHook(Thread {
+                DataLoader.processes.forEach {
+                    it.destroyForcibly()
+                }
+            })
+
             var architecture = Architecture.get()
 
             CommandArguments(args.toList()).parse {

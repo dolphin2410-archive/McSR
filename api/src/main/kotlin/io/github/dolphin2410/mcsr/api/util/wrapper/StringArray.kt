@@ -20,4 +20,8 @@ class StringArray(@Suppress("WeakerAccess") val array: Array<String>) {
     fun toMutableList(): List<String> {
         return array.toMutableList()
     }
+
+    override fun toString(): String {
+        return toList().joinToString()
+    }
 }

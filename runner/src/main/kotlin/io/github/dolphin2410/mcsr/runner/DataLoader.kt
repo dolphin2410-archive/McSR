@@ -6,16 +6,31 @@ import io.github.dolphin2410.mcsr.api.config.mappers.AroxuMapper
 import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.zip.ZipFile
 
+
 object DataLoader {
+
+    val processes = ArrayList<Process>()
+
     fun loadConfig(): McSRConfig {
         return ConfigSerializer.deserialize(
             ResourceManager.stream(javaClass, "config.mcsrc"))
+    }
+
+    fun printProc(process: Process) {
+        val input = BufferedReader(InputStreamReader(process.inputStream))
+        var line: String
+        while (input.readLine().also { line = it } != null) {
+            println(line)
+        }
+        input.close()
     }
 
     fun execute(script: URL, config: McSRConfig) {
@@ -28,6 +43,10 @@ object DataLoader {
                     .directory(folder.toFile())
                     .start()
 
+                processes.add(process)
+
+                printProc(process)
+
                 process.waitFor()
             }
 
@@ -35,6 +54,10 @@ object DataLoader {
                 val process = ProcessBuilder("${path.toAbsolutePath()}")
                     .directory(folder.toFile())
                     .start()
+
+                processes.add(process)
+
+                printProc(process)
 
                 process.waitFor()
             }

@@ -1,6 +1,7 @@
 package io.github.dolphin2410.mcsr.api.config
 
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
+import java.security.MessageDigest
 import kotlin.collections.HashMap
 
 open class AbstractConfiguration<T: AbstractConfiguration<T>> {
@@ -78,5 +79,17 @@ open class AbstractConfiguration<T: AbstractConfiguration<T>> {
 
     fun getStringArray(key: String): StringArray {
         return map[key]?.value as? StringArray ?: throw RuntimeException("No such StringArray value: $key")
+    }
+
+    fun generateHash(): ByteArray {
+        var hashes = byteArrayOf()
+        map.forEach {
+            val keyHash = it.key.toByteArray()
+            val valueHash = it.value.hash()
+            hashes += keyHash
+            hashes += valueHash
+        }
+
+        return MessageDigest.getInstance("SHA3-256").digest(hashes)
     }
 }
