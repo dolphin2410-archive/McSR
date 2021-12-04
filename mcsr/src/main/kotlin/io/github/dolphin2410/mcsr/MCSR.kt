@@ -5,7 +5,6 @@ import io.github.dolphin2410.mcsr.api.cli.parser.DefaultParser
 import io.github.dolphin2410.mcsr.api.loader.MCSRLoader
 import io.github.dolphin2410.mcsr.cli.CLIManager
 import io.github.dolphin2410.mcsr.gui.GUIManager
-import java.util.concurrent.Executors
 
 object MCSR: AbstractMcSR {
 

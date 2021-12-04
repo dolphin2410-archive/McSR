@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 import javafx.stage.StageStyle
+import kotlin.system.exitProcess
 
 class GUIManager: AbstractGUIManager {
 
@@ -36,6 +37,7 @@ class GUIManager: AbstractGUIManager {
 
     override fun close() {
         stage.close()
+        exitProcess(0)
     }
 
     fun loadScene(scene: Scene, loader: FXMLLoader) {

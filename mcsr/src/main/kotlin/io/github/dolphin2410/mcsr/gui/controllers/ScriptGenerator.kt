@@ -7,7 +7,6 @@ open class ScriptGenerator: BaseController() {
 
     lateinit var config: McSRConfig
 
-
     @FXML
     open fun next() {
         

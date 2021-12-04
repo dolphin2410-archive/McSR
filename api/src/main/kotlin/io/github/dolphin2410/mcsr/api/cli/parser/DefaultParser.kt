@@ -1,8 +1,6 @@
 package io.github.dolphin2410.mcsr.api.cli.parser
 
 import io.github.dolphin2410.mcsr.api.cli.CommandArguments
-import io.github.dolphin2410.mcsr.api.loader.MCSRLoader
-import kotlin.system.exitProcess
 
 object DefaultParser: CommandParser {
     override fun parse(commands: CommandArguments): ParseResult {

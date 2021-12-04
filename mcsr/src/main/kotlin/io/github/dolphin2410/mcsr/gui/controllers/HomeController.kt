@@ -8,18 +8,21 @@ import io.github.dolphin2410.mcsr.api.util.wrapper.PropertyObserver
 import io.github.dolphin2410.mcsr.config.ConfigurationManager
 import io.github.dolphin2410.mcsr.gui.SceneManager
 import io.github.dolphin2410.mcsr.gui.components.ConfigurationBar
+import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
-import javafx.scene.control.*
+import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.Button
+import javafx.scene.control.ButtonType
+import javafx.scene.control.ListView
 import javafx.scene.image.Image
 import javafx.scene.paint.ImagePattern
 import javafx.scene.shape.Circle
 import javafx.scene.web.WebView
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
-import java.lang.module.Configuration
 
 
 class HomeController: BaseController() {
@@ -28,7 +31,7 @@ class HomeController: BaseController() {
     lateinit var credits: Button
 
     @FXML
-    lateinit var list: ListView<Pair<String, McSRConfig>>
+    lateinit var list: ListView<McSRConfig>
 
     @FXML
     lateinit var icon: Circle
@@ -38,7 +41,7 @@ class HomeController: BaseController() {
 
     @FXML
     fun createNew() {
-        SceneManager.loadServerSetup(true)
+        SceneManager.loadServerSetup(reset = true)
     }
 
     @FXML
@@ -68,14 +71,15 @@ class HomeController: BaseController() {
                 )
             }.showOpenDialog(MCSR.gui.stage)?.let { file ->
                 val config = ConfigSerializer.deserialize(file.inputStream())
-                if (ConfigurationManager.map.data.any { entry -> entry.second.hash.get() == config.hash.get() }) {
+                if (ConfigurationManager.map.data.any { entry -> entry.hash.get() == config.hash.get() }) {
                     Alert(AlertType.INFORMATION, "The Item with the same hash exists", ButtonType.OK).apply {
                         initOwner(MCSR.gui.stage)
                         initStyle(StageStyle.UNDECORATED)
                         show()
                     }
                 } else {
-                    ConfigurationManager.addConfig(file.nameWithoutExtension, config)
+                    config.name.set(file.nameWithoutExtension)
+                    ConfigurationManager.addConfig(config)
                 }
             }
         }
@@ -84,9 +88,9 @@ class HomeController: BaseController() {
 
         ConfigurationManager.map.clearObservers()
 
-        ConfigurationManager.map.addObserver(object: PropertyObserver<ArrayList<Pair<String, McSRConfig>>> {
-            override fun accept(t: ArrayList<Pair<String, McSRConfig>>) {
-                list.items.setAll(ConfigurationManager.map.data.map { it.first to it.second })
+        ConfigurationManager.map.addObserver(object: PropertyObserver<ArrayList<McSRConfig>> {
+            override fun accept(t: ArrayList<McSRConfig>) {
+                list.items.setAll(ConfigurationManager.map.data)
             }
         }, true)
 

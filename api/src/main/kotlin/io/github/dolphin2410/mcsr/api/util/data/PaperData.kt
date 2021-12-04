@@ -2,7 +2,10 @@ package io.github.dolphin2410.mcsr.api.util.data
 
 import io.github.dolphin2410.mcsr.api.util.web.RestMethod
 import io.github.dolphin2410.mcsr.api.util.web.WebManager
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.net.URI
 import java.net.URL
 

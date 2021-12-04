@@ -1,7 +1,9 @@
 package io.github.dolphin2410.mcsr.api.util.wrapper
 
-class Property<T> {
-    private var data: T? = null
+import kotlin.reflect.KProperty
+
+open class Property<T> {
+    protected open var data: T? = null
 
     fun set(value: T) {
         this.data = value
@@ -18,5 +20,9 @@ class Property<T> {
     internal fun forceSet(value: Any) {
         @Suppress("unchecked_cast")
         this.data = value as T
+    }
+
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        return get()
     }
 }

@@ -4,8 +4,6 @@ import io.github.dolphin2410.mcsr.api.cli.AbstractCLIManager
 import io.github.dolphin2410.mcsr.api.cli.CommandArguments
 import io.github.dolphin2410.mcsr.api.cli.parser.CommandParser
 import io.github.dolphin2410.mcsr.api.cli.parser.ParseResult
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 class CLIManager: AbstractCLIManager {
     private val _parsers = ArrayList<CommandParser>()

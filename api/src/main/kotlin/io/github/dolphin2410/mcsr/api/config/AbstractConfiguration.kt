@@ -2,7 +2,6 @@ package io.github.dolphin2410.mcsr.api.config
 
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
 import java.security.MessageDigest
-import kotlin.collections.HashMap
 
 open class AbstractConfiguration<T: AbstractConfiguration<T>> {
     val map = HashMap<String, ConfigValue>()

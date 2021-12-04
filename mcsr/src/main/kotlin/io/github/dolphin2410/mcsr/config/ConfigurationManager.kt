@@ -10,42 +10,52 @@ object ConfigurationManager {
     @Suppress("WeakerAccess")
     val configFile = File("configs.mcsrclist")
 
-    private val internalMap = ArrayList<Pair<String, McSRConfig>>()
+    private val internalArray = ArrayList<McSRConfig>()
 
-    val map = ObservableProperty(internalMap)
+    val map = ObservableProperty(internalArray)
 
     init {
         configFile.createNewFile()
     }
 
     fun loadConfig() {
-        internalMap.clear()
+        internalArray.clear()
         DataInputStream(FileInputStream(configFile)).apply {
             while (read() != -1) {
-                // FIXME BUG!!!!
-                val name = readUTF()
                 val size = readInt()
                 val inputStream = ByteArrayInputStream(ByteArray(size) {
                     readByte()
                 })
                 val config = ConfigSerializer.deserialize(inputStream)
-                internalMap.add(name to config)
+                internalArray.add(config)
             }
         }
         map.trigger()
     }
 
-    fun addConfig(name: String, config: McSRConfig) {
-        DataOutputStream(FileOutputStream(configFile, true)).apply {
-            writeByte(1)
-            writeUTF(name)
-            val serialized = ConfigSerializer.serialize(config).second.toByteArray()
-            writeInt(serialized.size)
-            serialized.forEach {
-                writeByte(it.toInt())
+    fun writeConfig(vararg configs: McSRConfig) {
+        val stream = DataOutputStream(FileOutputStream(configFile))
+        for (config in map.data.apply { addAll(configs) }) {
+            stream.apply {
+                writeByte(1)
+                val serialized = ConfigSerializer.serialize(config).second.toByteArray()
+                writeInt(serialized.size)
+                serialized.forEach {
+                    writeByte(it.toInt())
+                }
             }
         }
-        println("Configuration $name saved!")
+    }
+
+    fun addConfig(config: McSRConfig) {
+        writeConfig(config)
         loadConfig()
+    }
+
+    fun removeConfig(config: McSRConfig) {
+        if (map.data.remove(config)) {
+            writeConfig()
+            map.trigger()
+        }
     }
 }

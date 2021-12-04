@@ -3,7 +3,6 @@ package io.github.dolphin2410.mcsr.api.cli
 import io.github.dolphin2410.mcsr.api.cli.parser.ParseResult
 import io.github.dolphin2410.mcsr.api.cli.template.TemplateMatcher
 import java.util.*
-import kotlin.collections.HashMap
 
 class CommandArguments(private val initArgs: List<String>) {
     companion object {

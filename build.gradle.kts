@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     kotlin("jvm") version "1.6.0"
@@ -9,9 +8,9 @@ plugins {
     id("org.javamodularity.moduleplugin") version "1.8.10" apply false
 }
 
-// Java 16
+// Java 17
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(16))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 subprojects {
@@ -37,13 +36,13 @@ subprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "16"
+            jvmTarget = "17"
         }
     }
 }
 
 group = "io.github.dolphin2410"
-version = "0.0.1"
+version = properties["version"].toString()
 
 repositories {
     mavenCentral()
@@ -65,7 +64,7 @@ tasks {
         dependsOn(project(":mcsr").tasks.jlinkZip)
     }
 
-    named<JavaExec>("run") {
+    register<DefaultTask>("execute") {
         dependsOn(runner)
         dependsOn(project(":mcsr").tasks.run)
     }

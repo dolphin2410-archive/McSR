@@ -5,7 +5,10 @@ import io.github.dolphin2410.mcsr.api.config.config.loadConfig
 import io.github.dolphin2410.mcsr.api.config.config.saveConfig
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.DataInputStream
+import java.io.DataOutputStream
+import java.io.InputStream
 
 object ConfigSerializer {
     fun deserialize(inputStream: InputStream): McSRConfig {
@@ -25,6 +28,8 @@ object ConfigSerializer {
                     }
                 })
             }
+            dataInputStream.close()
+            inputStream.close()
             loadConfig()
         }
     }

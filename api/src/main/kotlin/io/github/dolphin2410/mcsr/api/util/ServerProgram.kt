@@ -6,9 +6,9 @@ import io.github.dolphin2410.mcsr.api.util.data.ServerData
 import io.github.dolphin2410.mcsr.api.util.data.SpigotData
 
 enum class ServerProgram(val str: String, val data: ServerData) {
-    VANILLA("Vanilla", MinecraftData),
     PAPER("PaperMC", PaperData),
-    SPIGOT("Spigot", SpigotData);
+    SPIGOT("Spigot", SpigotData),
+    VANILLA("Vanilla", MinecraftData);
 
     companion object {
         @JvmStatic

@@ -1,12 +1,12 @@
 package io.github.dolphin2410.mcsr.api.config.extension
 
 import io.github.dolphin2410.mcsr.api.config.AbstractConfiguration
-import io.github.dolphin2410.mcsr.api.util.wrapper.Property
 import io.github.dolphin2410.mcsr.api.config.config.Config
 import io.github.dolphin2410.mcsr.api.config.config.ScriptConfig
 import io.github.dolphin2410.mcsr.api.config.config.loadConfig
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
+import io.github.dolphin2410.mcsr.api.util.wrapper.Property
 import io.github.dolphin2410.mcsr.api.util.wrapper.StringArray
 import java.security.MessageDigest
 
@@ -27,7 +27,7 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
             hash: String = MessageDigest.getInstance("SHA3-256").digest("".toByteArray()).joinToString()
         ): McSRConfig {
             return McSRConfig().apply {
-                set("jvmArgs", jvmArgs)
+                set("jvmArgs", StringArray(jvmArgs.split(" ").toTypedArray()))
                 set("autoReload", autoReload)
                 set("autoBackup", autoBackup)
                 set("serverFolder", serverFolder)
@@ -49,7 +49,7 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
     // JvmArguments
     @Config
     @ScriptConfig
-    val jvmArgs = Property<String>()
+    val jvmArgs = Property<StringArray>()
 
     @Config
     val hash = Property<String>()
@@ -96,5 +96,26 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
 
     fun toConf(): ShellConfig {
         return ShellConfig().loadFrom(this)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other !is McSRConfig) return false
+        return other.hash.get() == hash.get()
+    }
+
+    override fun hashCode(): Int {
+        var result = filename.hashCode()
+        result = 31 * result + jvmArgs.hashCode()
+        result = 31 * result + hash.hashCode()
+        result = 31 * result + autoReload.hashCode()
+        result = 31 * result + autoBackup.hashCode()
+        result = 31 * result + serverFolder.hashCode()
+        result = 31 * result + serverSoftware.hashCode()
+        result = 31 * result + memory.hashCode()
+        result = 31 * result + serverUrl.hashCode()
+        result = 31 * result + plugins.hashCode()
+        result = 31 * result + name.hashCode()
+        return result
     }
 }

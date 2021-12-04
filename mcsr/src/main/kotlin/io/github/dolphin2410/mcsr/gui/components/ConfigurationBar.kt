@@ -5,6 +5,9 @@ import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.util.ConfigurationBuilder
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
+import io.github.dolphin2410.mcsr.config.ConfigurationManager
+import io.github.dolphin2410.mcsr.gui.AlertManager
+import io.github.dolphin2410.mcsr.gui.StyleManager
 import javafx.geometry.Pos
 import javafx.scene.control.*
 import javafx.scene.layout.HBox
@@ -16,10 +19,10 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
-class ConfigurationBar: ListCell<Pair<String, McSRConfig>>() {
+class ConfigurationBar: ListCell<McSRConfig>() {
     private val box = HBox()
     private val label = Label()
-    private val button = Button("Share")
+    private val button = Button("x")
     private val pane = Pane()
     private lateinit var config: McSRConfig
 
@@ -32,16 +35,22 @@ class ConfigurationBar: ListCell<Pair<String, McSRConfig>>() {
         box.alignment = Pos.CENTER_LEFT
 
         button.setOnMouseClicked {
+            when (AlertManager.alert("Delete?", ButtonType.OK, ButtonType.CANCEL) { StyleManager.style(dialogPane, "/style/alert.css") }) {
+                ButtonType.OK -> ConfigurationManager.removeConfig(config)
+            }
+        }
+
+        box.setOnMouseClicked {
             val configBtn = ButtonType(".mcsrc")
             val runnerBtn = ButtonType("runner")
             val cancelBtn = ButtonType("cancel")
             Alert(Alert.AlertType.NONE, "Export As", configBtn, runnerBtn, cancelBtn).apply {
-                initStyle(StageStyle.UNDECORATED)
                 initOwner(MCSR.gui.stage)
+                initStyle(StageStyle.UNDECORATED)
+                StyleManager.style(this.dialogPane, "/style/alert.css")
 
                 when (showAndWait().get()) {
                     configBtn -> {
-                        // TODO Without Replacing
                         Files.copy(ByteArrayInputStream(ConfigSerializer.serialize(config).second.toByteArray()), Paths.get("${config.name.get()}.mcsrc"), StandardCopyOption.REPLACE_EXISTING)
                     }
 
@@ -53,13 +62,19 @@ class ConfigurationBar: ListCell<Pair<String, McSRConfig>>() {
         }
     }
 
-    override fun updateItem(item: Pair<String, McSRConfig>?, empty: Boolean) {
+    override fun updateItem(item: McSRConfig?, empty: Boolean) {
         super.updateItem(item, empty)
         text = null
-        if (!empty) {
-            label.text = item?.first
-            this.config = item?.second!!
+
+        item?.let {
+            val name: String by it.name
+
+            if (!empty) {
+                label.text = name
+                config = it
+            }
         }
+
         graphic = if (!empty) box else null
     }
 }

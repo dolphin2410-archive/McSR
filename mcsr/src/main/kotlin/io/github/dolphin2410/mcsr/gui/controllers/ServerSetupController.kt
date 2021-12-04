@@ -3,16 +3,15 @@ package io.github.dolphin2410.mcsr.gui.controllers
 import io.github.dolphin2410.mcsr.api.util.ServerProgram
 import io.github.dolphin2410.mcsr.api.util.data.MinecraftData
 import io.github.dolphin2410.mcsr.api.util.data.PaperData
-import io.github.dolphin2410.mcsr.api.util.data.ServerData
 import io.github.dolphin2410.mcsr.api.util.data.SpigotData
+import io.github.dolphin2410.mcsr.gui.AlertManager
 import io.github.dolphin2410.mcsr.gui.SceneManager
+import io.github.dolphin2410.mcsr.gui.StyleManager
 import io.github.dolphin2410.mcsr.gui.util.ServerSetupMode
 import javafx.application.Platform
 import javafx.fxml.FXML
-import javafx.scene.control.Accordion
-import javafx.scene.control.ComboBox
-import javafx.scene.control.TextField
-import javafx.scene.control.TitledPane
+import javafx.fxml.FXMLLoader
+import javafx.scene.control.*
 
 class ServerSetupController : ScriptGenerator() {
     @FXML
@@ -38,24 +37,26 @@ class ServerSetupController : ScriptGenerator() {
 
     lateinit var mode: ServerSetupMode
 
-    fun init() {
-        acc.expandedPane = guiPane
-        mode = ServerSetupMode.GUI
-
+    override fun load(loader: FXMLLoader) {
+        super.load(loader)
         acc.expandedPaneProperty().addListener { _, oldValue, newValue ->
             oldValue?.isCollapsible = true
             newValue?.let {
                 Platform.runLater{
                     newValue.isCollapsible = false
                     mode = if (newValue == urlPane) ServerSetupMode.URL else ServerSetupMode.GUI
-                    println(mode)
                 }
             }
         }
 
+        acc.expandedPaneProperty().set(guiPane)
+
+        mode = ServerSetupMode.GUI
 
         server.items.setAll(*ServerProgram.values().map { it.str }.toTypedArray())
         server.selectionModel.selectFirst()
+        updateVersions()
+        updateBuilds()
 
         //https://launchermeta.mojang.com/mc/game/version_manifest.json
     }
@@ -91,14 +92,16 @@ class ServerSetupController : ScriptGenerator() {
 
     @FXML
     override fun next() {
-        if (mode == ServerSetupMode.URL && urlField.text != "") {
-            this.config.serverUrl.set(urlField.text)
-            SceneManager.loadExtraSetup(this.config)
+        if (mode == ServerSetupMode.URL) {
+            this.config.serverUrl.set(if (urlField.text == "") urlField.promptText else urlField.text)
+            SceneManager.loadExtraSetup(config, true)
         } else if (mode == ServerSetupMode.GUI && version.selectionModel.selectedItem != null && server.selectionModel.selectedItem != null && build.selectionModel.selectedItem != null) {
             this.config.serverUrl.set(ServerProgram.from(server.selectionModel.selectedItem).data.buildUrl(version.selectionModel.selectedItem, build.selectionModel.selectedItem).toString())
-            SceneManager.loadExtraSetup(this.config)
+            SceneManager.loadExtraSetup(config, true)
         } else {
-            println("Please input!!!")
+            AlertManager.alert("Please select a valid option", ButtonType.OK) {
+                StyleManager.style(dialogPane, "/style/alert.css")
+            }
         }
     }
 
@@ -106,5 +109,10 @@ class ServerSetupController : ScriptGenerator() {
     override fun cancel() {
         super.cancel()
         SceneManager.loadHome()
+    }
+
+    override fun initialize() {
+        super.initialize()
+        urlField.promptText = "https://clip.aroxu.me/download?mc_version=${PaperData.latestVersion}"
     }
 }

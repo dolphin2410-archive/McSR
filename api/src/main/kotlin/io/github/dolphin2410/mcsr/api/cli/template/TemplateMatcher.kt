@@ -2,7 +2,6 @@ package io.github.dolphin2410.mcsr.api.cli.template
 
 import java.text.MessageFormat
 import java.text.ParseException
-import kotlin.collections.HashMap
 
 object TemplateMatcher {
     fun match(pattern: String, data: String): HashMap<String, String> {

@@ -54,11 +54,11 @@ class ScriptController : ScriptGenerator() {
     @FXML
     override fun next() {
         config.serverSoftware.set(scriptType.name)
-        SceneManager.loadFinish(config)
+        SceneManager.loadFinish(config, true)
     }
 
     @FXML
     override fun cancel() {
-        SceneManager.loadExtraSetup(this.config)
+        SceneManager.loadExtraSetup(config)
     }
 }
