@@ -15,7 +15,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mac-bin.zip
+          name: mac-bin
           path: mcsr/build/image/
   windows:
     runs-on: windows-latest
@@ -31,7 +31,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: windows-bin.zip
+          name: windows-bin
           path: mcsr/build/image/
   debian:
     runs-on: ubuntu-latest
@@ -47,5 +47,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: debian-bin.zip
+          name: debian-bin
           path: mcsr/build/image/
