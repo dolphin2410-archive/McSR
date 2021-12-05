@@ -4,6 +4,7 @@ open module mcsr {
     requires java.desktop;
     requires java.net.http;
     requires jdk.crypto.ec;
+    requires jdk.zipfs;
     requires api;
 
     exports io.github.dolphin2410.mcsr;
