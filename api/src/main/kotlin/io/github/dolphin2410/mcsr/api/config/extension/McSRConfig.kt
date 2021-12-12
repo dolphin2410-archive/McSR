@@ -18,7 +18,7 @@ class McSRConfig private constructor(): AbstractConfiguration<McSRConfig>() {
             autoReload: Boolean = false,
             autoBackup: Boolean = false,
             serverFolder: String = "./server/",
-            serverSoftware: ScriptType = ScriptType.AROXU,
+            serverSoftware: ScriptType = ScriptType.DOLPHIN2410,
             memory: Int = 1,
             serverUrl: String = PaperData.latestJarUrl,
             filename: String = "default.jar",

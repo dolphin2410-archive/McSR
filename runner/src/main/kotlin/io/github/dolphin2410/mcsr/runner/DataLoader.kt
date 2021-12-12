@@ -3,6 +3,7 @@ package io.github.dolphin2410.mcsr.runner
 import io.github.dolphin2410.mcsr.api.config.config.asEnum
 import io.github.dolphin2410.mcsr.api.config.extension.McSRConfig
 import io.github.dolphin2410.mcsr.api.config.mappers.AroxuMapper
+import io.github.dolphin2410.mcsr.api.config.mappers.Dolphin2410Mapper
 import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.script.ScriptType
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
@@ -13,7 +14,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.zip.ZipFile
-
 
 object DataLoader {
 
@@ -50,6 +50,7 @@ object DataLoader {
                 process.waitFor()
             }
 
+            ScriptType.DOLPHIN2410,
             ScriptType.AROXU -> {
                 val process = ProcessBuilder("${path.toAbsolutePath()}")
                     .directory(folder.toFile())
@@ -68,6 +69,41 @@ object DataLoader {
 
     fun download(folder: Path, script: URL, config: McSRConfig): Path {
         return when (config.serverSoftware.get().asEnum<ScriptType>()) {
+            ScriptType.DOLPHIN2410 -> {
+                val zipFilePath = Paths.get(folder.toString(), "server.zip")
+
+                // Download from the internet
+                Files.copy(script.openStream(), zipFilePath)
+
+                // To ZipFile
+                val zipFile = ZipFile(zipFilePath.toString())
+
+                // Get first element
+                val executable = zipFile.entries().nextElement()
+
+                // Get InputStream
+                val executableInputStream = zipFile.getInputStream(executable)
+
+                // Path
+                val executablePath = Paths.get(folder.toString(), executable.name)
+
+                // Load to executable
+                Files.copy(executableInputStream, executablePath)
+
+                // Close ZipFile
+                zipFile.close()
+
+                // Delete ZipFile
+                Files.deleteIfExists(zipFilePath)
+
+                // Configuration File
+                Files.copy(
+                    config.toJson().toJson(Dolphin2410Mapper).toString().byteInputStream(),
+                    Paths.get(folder.toString(), "server.conf.json")
+                )
+
+                executablePath
+            }
             ScriptType.AROXU -> {
                 val zipFilePath = Paths.get(folder.toString(), "server.zip")
 

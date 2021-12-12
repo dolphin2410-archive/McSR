@@ -21,7 +21,7 @@ class ScriptController : ScriptGenerator() {
     @FXML
     lateinit var scriptName: Label
 
-    private var scriptType = ScriptType.AROXU
+    private var scriptType = ScriptType.DOLPHIN2410
 
     private val scripts = ScriptType.values()
 
