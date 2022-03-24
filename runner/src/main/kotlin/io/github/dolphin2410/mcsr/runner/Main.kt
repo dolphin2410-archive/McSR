@@ -34,9 +34,7 @@ class Main {
             config.loadConfig()
             config.saveConfig()
 
-
-
-            val scriptType = config.serverSoftware.get().asEnum<ScriptType>() ?: throw RuntimeException("Invalid ScriptType: ${config.serverSoftware}")
+            val scriptType = config.serverSoftware.get().asEnum<ScriptType>() ?: throw RuntimeException("Invalid ScriptType: ${config.serverSoftware.get()}")
             DataLoader.execute(scriptType.link.getUrl(architecture), config)
         }
     }

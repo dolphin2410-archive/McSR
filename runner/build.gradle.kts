@@ -6,6 +6,8 @@ dependencies {
 
 tasks {
     jar {
+        archiveFileName.set("runner.jar")
+
         manifest {
             attributes["Main-Class"] = "io.github.dolphin2410.mcsr.runner.Main"
         }

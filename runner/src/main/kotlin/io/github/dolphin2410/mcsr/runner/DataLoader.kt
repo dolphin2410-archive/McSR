@@ -6,6 +6,7 @@ import io.github.dolphin2410.mcsr.api.config.mappers.AroxuMapper
 import io.github.dolphin2410.mcsr.api.config.mappers.Dolphin2410Mapper
 import io.github.dolphin2410.mcsr.api.config.parser.ConfigSerializer
 import io.github.dolphin2410.mcsr.api.script.ScriptType
+import io.github.dolphin2410.mcsr.api.util.OS
 import io.github.dolphin2410.mcsr.api.util.ResourceManager
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -70,31 +71,10 @@ object DataLoader {
     fun download(folder: Path, script: URL, config: McSRConfig): Path {
         return when (config.serverSoftware.get().asEnum<ScriptType>()) {
             ScriptType.DOLPHIN2410 -> {
-                val zipFilePath = Paths.get(folder.toString(), "server.zip")
+                val binaryPath = Paths.get(folder.toString(), if (OS.get() == OS.WINDOWS) "server-script.exe" else "server-script")
 
                 // Download from the internet
-                Files.copy(script.openStream(), zipFilePath)
-
-                // To ZipFile
-                val zipFile = ZipFile(zipFilePath.toString())
-
-                // Get first element
-                val executable = zipFile.entries().nextElement()
-
-                // Get InputStream
-                val executableInputStream = zipFile.getInputStream(executable)
-
-                // Path
-                val executablePath = Paths.get(folder.toString(), executable.name)
-
-                // Load to executable
-                Files.copy(executableInputStream, executablePath)
-
-                // Close ZipFile
-                zipFile.close()
-
-                // Delete ZipFile
-                Files.deleteIfExists(zipFilePath)
+                Files.copy(script.openStream(), binaryPath)
 
                 // Configuration File
                 Files.copy(
@@ -102,7 +82,7 @@ object DataLoader {
                     Paths.get(folder.toString(), "server.conf.json")
                 )
 
-                executablePath
+                binaryPath
             }
             ScriptType.AROXU -> {
                 val zipFilePath = Paths.get(folder.toString(), "server.zip")

@@ -20,13 +20,13 @@ data class ScriptLink(val baseUrl: String, val scriptType: ScriptType) {
                     }
                 }
                 ScriptType.DOLPHIN2410 -> {
-                    val latest = GitApi.getLatestRelease("aroxu", "server-script").join()
+                    val latest = GitApi.getLatestRelease("dolphin2410", "server-script").join()
                     baseUrl + when (architecture) {
-                        Architecture.WINDOWS_64 -> "releases/download/$latest/server_windows_x64.exe.zip"
-                        Architecture.WINDOWS_32 -> "releases/download/$latest/server_windows_x32.exe.zip"
-                        Architecture.LINUX_64 -> "releases/download/$latest/server_linux_x64.zip"
-                        Architecture.LINUX_32 -> "releases/download/$latest/server_linux_x32.zip"
-                        Architecture.DARWIN_64 -> "releases/download/$latest/server_darwin_x64.zip"
+                        Architecture.WINDOWS_64 -> "releases/download/$latest/server-script-windows.exe"
+                        Architecture.WINDOWS_32 -> "releases/download/$latest/server-script-windows.exe"
+                        Architecture.LINUX_64 -> "releases/download/$latest/server-script-linux"
+                        Architecture.LINUX_32 -> "releases/download/$latest/server-script-linux"
+                        Architecture.DARWIN_64 -> "releases/download/$latest/server-script-darwin"
                         else -> throw RuntimeException("Unsupported")
                     }
                 }
